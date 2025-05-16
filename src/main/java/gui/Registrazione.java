@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 public class Registrazione {
     private JFrame frame;
     private Controller controller;
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JLabel registerAsLabel;
     private JLabel nomeLabel;
     private JTextField nomeField;
@@ -26,16 +26,17 @@ public class Registrazione {
     private JCheckBox utenteCheck;
     private JPasswordField passwordField;
     private JCheckBox mostraCheckBox;
-    private JDialog registerSuccessDialog;
+
 
 
     public JFrame getFrame() {
         return frame;
     }
 
-    public Registrazione(JFrame frameC) {
+    public Registrazione(JFrame frameC)
+    {
         frame = new JFrame("Registrazione");
-        frame.setContentPane(panel1);
+        frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(500, 370);
@@ -45,8 +46,10 @@ public class Registrazione {
         ButtonGroup gruppo = new ButtonGroup();
         gruppo.add(utenteCheck);
         gruppo.add(amministratoreCheck);
+        utenteCheck.setSelected(true);
 
-        returnBtn.addActionListener(new ActionListener() { //UTILIZZATO PER TORNARE AL FORM PRECEDENTE
+        returnBtn.addActionListener(new ActionListener() //UTILIZZATO PER TORNARE AL FORM "AUTENTICAZIONE" DOPO LA REGISTRAZIONE
+        {
             @Override
             public void actionPerformed(ActionEvent e)
             {
@@ -59,13 +62,9 @@ public class Registrazione {
                 boolean isAdmin = amministratoreCheck.isSelected();
 
                 if ((isUtente && (nome.isEmpty() || cognome.isEmpty() || email.isEmpty() || password.isEmpty())) ||
-                        (isAdmin && (nome.isEmpty() || cognome.isEmpty() || email.isEmpty() || password.isEmpty() || idAmministratore.isEmpty()))) {
-                    JOptionPane.showMessageDialog(frame, "Errore, dati mancanti, ricontrollare i dati.");
-                    return;
-                }
-                if (password.length() < 10)
+                   (isAdmin && (nome.isEmpty() || cognome.isEmpty() || email.isEmpty() || password.isEmpty() || idAmministratore.isEmpty())))
                 {
-                    JOptionPane.showMessageDialog(frame, "La password deve contenere almeno 10 caratteri.");
+                    JOptionPane.showMessageDialog(frame, "Errore, dati mancanti ricontrollare i campi.");
                     return;
                 }
                 nomeField.setText("");
@@ -82,46 +81,42 @@ public class Registrazione {
             }
         });
 
-
-
-        amministratoreCheck.addItemListener(new ItemListener() {
+        amministratoreCheck.addActionListener(new ActionListener() { //TIPO REGISTRAZIONE (amministratore)
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 boolean isSelected = amministratoreCheck.isSelected();
                 idAmministratoreLabel.setVisible(isSelected);
                 idAmministratoreField.setVisible(isSelected);
                 frame.revalidate();
                 frame.repaint();
-
             }
         });
 
-
-        utenteCheck.addItemListener(new ItemListener() { // TIPO DI REGISTRAZIONE(utente/amminstratore)
+        utenteCheck.addActionListener(new ActionListener() // TIPO DI REGISTRAZIONE(utente)
+        {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (utenteCheck.isSelected()) {
-                    idAmministratoreLabel.setVisible(false);
-                    idAmministratoreField.setVisible(false);
-                    frame.revalidate();
-                    frame.repaint();
-                }
+            public void actionPerformed(ActionEvent e) {
+                idAmministratoreLabel.setVisible(false);
+                idAmministratoreField.setVisible(false);
+                frame.revalidate();
+                frame.repaint();
             }
         });
-        mostraCheckBox.addActionListener(new ActionListener() { //METODO PER MOSTRARE LA PASSWORD TRAMITE UNA CHECKBOX
+        mostraCheckBox.addActionListener(new ActionListener() //METODO PER MOSTRARE LA PASSWORD TRAMITE UNA CHECKBOX
+        {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mostraCheckBox.isSelected()){
+                if (mostraCheckBox.isSelected())
+                {
                     passwordField.setEchoChar((char)0);
-
-
                 }else
                     passwordField.setEchoChar('•');
             }
         });
 
 
-
     }
+
 }
