@@ -10,7 +10,7 @@ public class Volo
     private String aereoporto_origine;
     private String aereoporto_destinazione;
     private Date datavolo;
-    private LocalDateTime oraarrivo;
+    private LocalDateTime oraArrivo;
     private LocalDateTime ritardo ;
     private int numPosti;
     private StatoVolo registro;
@@ -18,13 +18,13 @@ public class Volo
 
     public Volo(String codice, String compagnia, String aereoporto_origine,
                 String aereoporto_destinazione, Date datavolo,
-                LocalDateTime oraarrivo, LocalDateTime ritardo, int numPosti) {
+                LocalDateTime oraArrivo, LocalDateTime ritardo, int numPosti) {
         this.codice = codice;
         this.compagnia = compagnia;
         this.aereoporto_origine = aereoporto_origine;
         this.aereoporto_destinazione = aereoporto_destinazione;
         this.datavolo = datavolo;
-        this.oraarrivo = oraarrivo;
+        this.oraArrivo = oraArrivo;
         this.ritardo = ritardo;
         this.numPosti = numPosti;
         Object StatoVolo;
@@ -71,12 +71,12 @@ public class Volo
         this.datavolo = datavolo;
     }
 
-    public LocalDateTime getOraarrivo() {
-        return oraarrivo;
+    public LocalDateTime getOraArrivo() {
+        return oraArrivo;
     }
 
-    public void setOraarrivo(LocalDateTime oraarrivo) {
-        this.oraarrivo = oraarrivo;
+    public void setOraArrivo(LocalDateTime oraArrivo) {
+        this.oraArrivo = oraArrivo;
     }
 
     public LocalDateTime getRitardo() {

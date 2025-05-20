@@ -1,10 +1,19 @@
 package models;
 
 public class Utente  {
+    private String nome_utente;
+    private String Cognome;
+    private String Email;
     private String pName;
     private String nVolo;
-    private String nome_utente;
     private String password;
+public Utente( String nome_utente, String password,String Cognome,String Email) { // va eliminata se necessario
+    this.nome_utente = nome_utente;
+    this.Cognome = Cognome;
+    this.Email = Email;
+    this.password = password;
+
+}
 
    public void Prenotazione(String pName, String nVolo, String nome_utente, String password) {
         this.pName = pName;
@@ -21,7 +30,16 @@ public void registrazione(){
 public void prenotaVolo(){
         System.out.println(nome_utente+"ha prenotato il volo.");
     }
-public void VisualizzaVolo(){
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void VisualizzaVolo(){
 
         System.out.println(nome_utente+"ha visualizzato il volo.");
     }

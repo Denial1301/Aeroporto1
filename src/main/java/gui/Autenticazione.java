@@ -41,7 +41,7 @@ public class Autenticazione
 
             @Override
             public void actionPerformed(ActionEvent e) { // REGISTRAZIONE
-                Registrazione registrazione = new Registrazione(frameHome);
+                Registrazione registrazione = new Registrazione(frameHome,controller);
                 registrazione.getFrame().setVisible(true);
                 frameHome.setVisible(false);
                 loginField.setText("");
@@ -72,12 +72,19 @@ public class Autenticazione
 
                 }else
                  {
-                    //if(){} // serve per controllare se l'utente effetivamente esiste nel DB, da implementare con homework 3
-                    UtenteForm utenteForm = new UtenteForm(frameHome);
-                    utenteForm.getFrame().setVisible(true);
-                    frameHome.setVisible(false);
-                    loginField.setText("");
-                    passwordField.setText("");
+                     try {
+                         controller.login(loginField.getText(),passwordField.getText());
+
+                         UtenteForm utenteForm = new UtenteForm(frameHome);
+                         utenteForm.getFrame().setVisible(true);
+                         frameHome.setVisible(false);
+                         loginField.setText("");
+                         passwordField.setText("");
+                     } catch (Exception ex) {
+                         JOptionPane.showMessageDialog(frameHome, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+
+                     }
+
 
 
                  }
