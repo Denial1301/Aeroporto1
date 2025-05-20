@@ -65,7 +65,7 @@ public class Autenticazione
         {
 
             @Override
-            public void actionPerformed(ActionEvent e)
+            public void actionPerforme(ActionEvent e)
             {
                 if (loginField.getText().equals("") || passwordField.getText().equals(""))
                 {
