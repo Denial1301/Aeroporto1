@@ -24,8 +24,7 @@ public class Controller {
 
         throw new Exception("Errore, utente non registrato o password errata.");
     }
-   public void registraUtente(String nome_utente, String password, String cognome, String email) throws Exception {
-
+public void registraUtente(Utente utente) throws Exception {
    }
 
 
