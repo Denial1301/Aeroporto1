@@ -33,7 +33,7 @@ public class Autenticazione
         frameHome.setSize(400, 200);
     }
 
-    public Autenticazione()
+    public Autenticazion ()
     {
         
         controller = new Controller();
