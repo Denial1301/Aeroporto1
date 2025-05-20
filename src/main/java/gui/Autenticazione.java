@@ -49,7 +49,7 @@ public class Autenticazione
                 passwordField.setText("");
             }
         });
-        passwordCheck.addActionListene(new ActionListener()
+        passwordCheck.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
