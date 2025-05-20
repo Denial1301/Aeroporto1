@@ -35,6 +35,7 @@ public class Autenticazione
 
     public Autenticazione()
     {
+        
         controller = new Controller();
         registratiButton.addActionListener(new ActionListener()
         {
