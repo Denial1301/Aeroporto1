@@ -19,13 +19,11 @@ public class Autenticazione
     private JCheckBox passwordCheck;
     private static JFrame frameHome;
     private Controller controller;
+
+
     public static void main(String[] args)
     {
-
-
-
         frameHome = new JFrame("Autenticazione");
-
         frameHome.setContentPane(new Autenticazione().mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameHome.pack();
@@ -75,9 +73,15 @@ public class Autenticazione
                  {
                      try {
                          controller.login(loginField.getText(),passwordField.getText());
-
-                         UtenteForm utenteForm = new UtenteForm(frameHome);
-                         utenteForm.getFrame().setVisible(true);
+                         if (loginField.getText().contains("amministratore"))
+                         {
+                            AdminForm adminForm = new AdminForm(frameHome, controller);
+                            adminForm.getFrame().setVisible(true);
+                         }else
+                         {
+                             UtenteForm utenteForm = new UtenteForm(frameHome);
+                             utenteForm.getFrame().setVisible(true);
+                         }
                          frameHome.setVisible(false);
                          loginField.setText("");
                          passwordField.setText("");
@@ -85,9 +89,6 @@ public class Autenticazione
                          JOptionPane.showMessageDialog(frameHome, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 
                      }
-
-
-
                  }
             }
         });

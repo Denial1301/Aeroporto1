@@ -4,8 +4,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+
 
 public class Registrazione {
     private JFrame frame;
@@ -64,10 +63,6 @@ public class Registrazione {
                 frame.dispose();
             }
         });
-
-
-
-
         mostraCheckBox.addActionListener(new ActionListener() //METODO PER MOSTRARE LA PASSWORD TRAMITE UNA CHECKBOX
         {
 
