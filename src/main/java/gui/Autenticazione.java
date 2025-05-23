@@ -79,7 +79,7 @@ public class Autenticazione
                             adminForm.getFrame().setVisible(true);
                          }else
                          {
-                             UtenteForm utenteForm = new UtenteForm(frameHome);
+                             UtenteForm utenteForm = new UtenteForm(frameHome,controller);
                              utenteForm.getFrame().setVisible(true);
                          }
                          frameHome.setVisible(false);

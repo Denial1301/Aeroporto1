@@ -1,7 +1,8 @@
 package models;
+import java.time.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Volo
 {
@@ -9,16 +10,17 @@ public class Volo
     private String compagnia;
     private String aereoporto_origine;
     private String aereoporto_destinazione;
-    private Date datavolo;
-    private LocalDateTime oraArrivo;
-    private LocalDateTime ritardo ;
+    private LocalDate datavolo;
+    private LocalTime oraArrivo;
+    private int ritardo ;
     private int numPosti;
     private StatoVolo registro;
 
 
     public Volo(String codice, String compagnia, String aereoporto_origine,
-                String aereoporto_destinazione, Date datavolo,
-                LocalDateTime oraArrivo, LocalDateTime ritardo, int numPosti) {
+                String aereoporto_destinazione, LocalDate datavolo,
+                LocalTime oraArrivo, int ritardo, int numPosti) {
+
         this.codice = codice;
         this.compagnia = compagnia;
         this.aereoporto_origine = aereoporto_origine;
@@ -63,28 +65,37 @@ public class Volo
         this.aereoporto_destinazione = aereoporto_destinazione;
     }
 
-    public Date getDatavolo() {
+
+    public LocalDate getDatavolo() {
         return datavolo;
     }
 
-    public void setDatavolo(Date datavolo) {
+    public void setDatavolo(LocalDate datavolo) {
         this.datavolo = datavolo;
     }
 
-    public LocalDateTime getOraArrivo() {
+    public LocalTime getOraArrivo() {
         return oraArrivo;
     }
 
-    public void setOraArrivo(LocalDateTime oraArrivo) {
+    public void setOraArrivo(LocalTime oraArrivo) {
         this.oraArrivo = oraArrivo;
     }
 
-    public LocalDateTime getRitardo() {
+    public int getRitardo() {
         return ritardo;
     }
 
-    public void setRitardo(LocalDateTime ritardo) {
+    public void setRitardo(int ritardo) {
         this.ritardo = ritardo;
+    }
+
+    public StatoVolo getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(StatoVolo registro) {
+        this.registro = registro;
     }
 
     public int getNumPosti() {
@@ -94,4 +105,21 @@ public class Volo
     public void setNumPosti(int numPosti) {
         this.numPosti = numPosti;
     }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        return "Volo{" +
+                "codice='" + codice + '\'' +
+                ", compagnia='" + compagnia + '\'' +
+                ", aereoporto_origine='" + aereoporto_origine + '\'' +
+                ", aereoporto_destinazione='" + aereoporto_destinazione + '\'' +
+                ", datavolo=" + datavolo.format(dateFormatter) +
+                ", oraArrivo=" + oraArrivo.format(timeFormatter) +
+                ", ritardo=" + ritardo + " min" +
+                ", numPosti=" + numPosti + "}";
+    }
+
 }
