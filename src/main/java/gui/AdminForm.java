@@ -10,8 +10,6 @@ public class AdminForm
 {
     private JPanel mainPanel;
     private JButton insertFlyBtn;
-    private JButton modifyFlyBtn;
-    private JButton modifyGateBtn;
     private JLabel welcomeLabel;
     private JButton logoutBtn;
     private JFrame frame;

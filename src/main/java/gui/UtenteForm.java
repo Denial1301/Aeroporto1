@@ -44,5 +44,13 @@ public class UtenteForm {
             controller.VediVolo();
         }
     });
+    gestisciPrenotazioneButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            frame.setVisible(false);
+            GestisciPrenotazioni gestisciPrenotazioni = new GestisciPrenotazioni(frame, controller);
+            gestisciPrenotazioni.getFrame().setVisible(true);
+
+        }
+    });
     }
 }

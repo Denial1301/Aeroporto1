@@ -17,23 +17,21 @@ public class Autenticazione
     private JLabel passwordLabel;
     private JLabel welcomeLabel;
     private JCheckBox passwordCheck;
-    private static JFrame frameHome;
+    private  JFrame frameHome;
     private Controller controller;
 
+    public JFrame getFrameHome() {
+        return frameHome;
+    }
 
-    public static void main(String[] args)
+    public Autenticazione(Frame frameC)
     {
         frameHome = new JFrame("Autenticazione");
-        frameHome.setContentPane(new Autenticazione().mainPanel);
+        frameHome.setContentPane(mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameHome.pack();
         frameHome.setVisible(true);
         frameHome.setSize(400, 200);
-    }
-
-    public Autenticazione()
-    {
-        
         controller = new Controller();
         registratiButton.addActionListener(new ActionListener()
         {
