@@ -15,6 +15,7 @@ public class UtenteForm {
     private JButton logoutBtn;
     private JFrame frame;
 
+
     public JFrame getFrame() {
         return frame;
     }

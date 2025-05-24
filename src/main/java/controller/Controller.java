@@ -16,8 +16,8 @@ public class Controller {
         utenti = new ArrayList<>();
         volo = new ArrayList<>();
         utenti.add(new Utente("Daniele","Delta","Guardascione","daniele@gmail.com"));
-        utenti.add(new Utente("Salvatore","Ricco","Frizzi","salvatore@amministratore.com"));
-        utenti.add(new Utente("s","s","s","@amministratore"));
+        utenti.add(new Utente("Salvatore","Ricco","Frizzi","salvatore@amministratoreaereoportonapoli.com"));
+        utenti.add(new Utente("s","s","s","@amministratoreaereoportonapoli"));
         volo.add(new Volo("test","test","test","test",LocalDate.of(2025,6,4),LocalTime.of(17,00),0,90));
 
 
@@ -32,7 +32,7 @@ public class Controller {
                 int index = utente.getEmail().indexOf("@");
                 if (index != -1) {
                     String check = utente.getEmail().substring(index+1);
-                    if (check.startsWith("amministratore")) {
+                    if (check.startsWith("amministratoreaereoportonapoli")) {
                         System.out.println("Accesso eseguito come: Amministratore");
                         return;
                     }
@@ -51,9 +51,9 @@ public class Controller {
         System.out.println("Volo registrato");
     }
     public void VediVolo() {
-        for (Volo index: volo){
+        for (Volo voli: volo){
 
-            System.out.println(index.toString());
+            System.out.println(voli.toString());
 
 
 
