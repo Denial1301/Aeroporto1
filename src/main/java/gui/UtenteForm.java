@@ -13,7 +13,7 @@ public class UtenteForm {
     private JPanel btnPanel;
     private JButton gestisciPrenotazioneButton;
     private JButton logoutBtn;
-    private JFrame frame;
+    private JFrame frama;
 
     public JFrame getFrame() {
         return frame;
