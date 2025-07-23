@@ -1,53 +1,47 @@
 package models;
 
+import java.time.LocalDate;
+
+
 public class Utente  {
-    private String nome_utente;
-    private String Cognome;
-    private String Email;
-    private String pName;
-    private String nVolo;
+    private String nome;
+    private String cognome;
+    private String email;
+    private LocalDate dataNascita;
     private String password;
-public Utente( String nome_utente, String password,String Cognome,String Email) { // va eliminata se necessario
-    this.nome_utente = nome_utente;
-    this.Cognome = Cognome;
-    this.Email = Email;
+
+    public LocalDate getDataNascita() {
+        return dataNascita;
+    }
+
+    public Utente(String nome, String password, String cognome, String email, LocalDate dataNascita) { // va eliminata se necessario
+
+    this.cognome = cognome;
+    this.email = email;
     this.password = password;
+    this.dataNascita = dataNascita;
 
 }
+public Utente(String email, String Password)
+{
+    this.email = email;
+    this.password = Password;
+}
 
-   public void Prenotazione(String pName, String nVolo, String nome_utente, String password) {
-        this.pName = pName;
-        this.nVolo = nVolo;
-        this.nome_utente = nome_utente;
-        this.password = password;
-    }
-public void accesso(){
-    System.out.println("Accesso effettuato con: "   + nome_utente);
-    }
-public void registrazione(){
-    System.out.println("Registrazione effettuata con: " + nome_utente);
-    }
-public void prenotaVolo(){
-        System.out.println(nome_utente+"ha prenotato il volo.");
+    public String getNome() {
+        return nome;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
-
     public String getPassword() {
         return password;
     }
 
-    public void VisualizzaVolo(){
+    public String getCognome() {
+        return cognome;
+    }
 
-        System.out.println(nome_utente+"ha visualizzato il volo.");
-    }
-public void ModificaVolo(String pName, String nVolo) {
-        System.out.println(nome_utente+"ha modificato la prenotazione del volo.");
-    }
-public void CercaPasseggero(String nVolo) {
 
-        System.out.println("passeggero trovato.");
-    }
 }

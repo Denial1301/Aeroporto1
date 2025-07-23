@@ -1,6 +1,6 @@
 package models;
 
-public enum statoPrenotazione {
+public enum StatoPrenotazione {
     Confermata,
     In_Attesa,
     Cancellata

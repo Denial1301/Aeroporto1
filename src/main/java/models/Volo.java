@@ -1,6 +1,5 @@
 package models;
 import java.time.*;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 
@@ -8,33 +7,39 @@ public class Volo
 {
     private String codice;
     private String compagnia;
-    private String aereoporto_origine;
-    private String aereoporto_destinazione;
-    private LocalDate datavolo;
+    private String aeroportoOrigine;
+    private String aeroportoDestinazione;
+    private LocalDate dataVolo;
+    private LocalTime oraPartenza;
     private LocalTime oraArrivo;
-    private int ritardo ;
+    private int ritardo;
     private int numPosti;
     private StatoVolo registro;
 
 
-    public Volo(String codice, String compagnia, String aereoporto_origine,
-                String aereoporto_destinazione, LocalDate datavolo,
-                LocalTime oraArrivo, int ritardo, int numPosti) {
+    public Volo(String codice, String compagnia, String aeroportoOrigine,
+                String aeroportoDestinazione, LocalDate dataVolo, LocalTime oraPartenza,
+                LocalTime oraArrivo, int ritardo, int numPosti, StatoVolo registro) {
 
         this.codice = codice;
         this.compagnia = compagnia;
-        this.aereoporto_origine = aereoporto_origine;
-        this.aereoporto_destinazione = aereoporto_destinazione;
-        this.datavolo = datavolo;
+        this.aeroportoOrigine = aeroportoOrigine;
+        this.aeroportoDestinazione = aeroportoDestinazione;
+        this.dataVolo = dataVolo;
         this.oraArrivo = oraArrivo;
+        this.oraPartenza = oraPartenza;
         this.ritardo = ritardo;
         this.numPosti = numPosti;
-        Object StatoVolo;
+        this.registro = registro;
     }
 
     // Getter e Setter
     public String getCodice() {
         return codice;
+    }
+
+    public LocalTime getOraPartenza() {
+        return oraPartenza;
     }
 
     public void setCodice(String codice) {
@@ -49,29 +54,29 @@ public class Volo
         this.compagnia = compagnia;
     }
 
-    public String getAereoporto_origine() {
-        return aereoporto_origine;
+    public String getAeroportoOrigine() {
+        return aeroportoOrigine;
     }
 
-    public void setAereoporto_origine(String aereoporto_origine) {
-        this.aereoporto_origine = aereoporto_origine;
+    public void setAeroportoOrigine(String aeroportoOrigine) {
+        this.aeroportoOrigine = aeroportoOrigine;
     }
 
-    public String getAereoporto_destinazione() {
-        return aereoporto_destinazione;
+    public String getAeroportoDestinazione() {
+        return aeroportoDestinazione;
     }
 
-    public void setAereoporto_destinazione(String aereoporto_destinazione) {
-        this.aereoporto_destinazione = aereoporto_destinazione;
+    public void setAeroportoDestinazione(String aeroportoDestinazione) {
+        this.aeroportoDestinazione = aeroportoDestinazione;
     }
 
 
-    public LocalDate getDatavolo() {
-        return datavolo;
+    public LocalDate getDataVolo() {
+        return dataVolo;
     }
 
-    public void setDatavolo(LocalDate datavolo) {
-        this.datavolo = datavolo;
+    public void setDataVolo(LocalDate dataVolo) {
+        this.dataVolo = dataVolo;
     }
 
     public LocalTime getOraArrivo() {
@@ -98,6 +103,8 @@ public class Volo
         this.registro = registro;
     }
 
+
+
     public int getNumPosti() {
         return numPosti;
     }
@@ -106,20 +113,29 @@ public class Volo
         this.numPosti = numPosti;
     }
 
-    @Override
-    public String toString() {
+
+    public String allToString() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         return "Volo{" +
                 "codice='" + codice + '\'' +
                 ", compagnia='" + compagnia + '\'' +
-                ", aereoporto_origine='" + aereoporto_origine + '\'' +
-                ", aereoporto_destinazione='" + aereoporto_destinazione + '\'' +
-                ", datavolo=" + datavolo.format(dateFormatter) +
-                ", oraArrivo=" + oraArrivo.format(timeFormatter) +
+                ", origine='" + aeroportoOrigine + '\'' +
+                ", destinazione='" + aeroportoDestinazione + '\'' +
+                ", data=" + dataVolo.format(dateFormatter) + '\'' +
+                ", Partenza=" + oraPartenza.format(timeFormatter) + '\'' +
+                ", Arrivo=" + oraArrivo.format(timeFormatter) +
                 ", ritardo=" + ritardo + " min" +
-                ", numPosti=" + numPosti + "}";
+                ", Posti disponibili=" + numPosti + "}";
     }
 
+    @Override
+    public String toString() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return "Volo: " +
+                "codice='" + codice + '\'' +
+                ", compagnia='" + compagnia + '\'' +
+                ", dataVolo=" + dataVolo.format(dateFormatter) +'\'';
+    }
 }

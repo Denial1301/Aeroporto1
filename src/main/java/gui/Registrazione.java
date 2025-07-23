@@ -4,8 +4,12 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeParseException;
 
 
+/**
+ * The type Registrazione.
+ */
 public class Registrazione {
     private JFrame frame;
     private JPanel mainPanel;
@@ -20,12 +24,25 @@ public class Registrazione {
     private JLabel passwordLabel;
     private JPasswordField passwordField;
     private JCheckBox mostraCheckBox;
+    private JLabel dateLabel;
+    private JTextField dateField;
 
 
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * Instantiates a new Registrazione.
+     *
+     * @param frameC     the frame c
+     * @param controller the controller
+     */
     public Registrazione(JFrame frameC, Controller controller)
     {
         frame = new JFrame("Registrazione");
@@ -37,33 +54,44 @@ public class Registrazione {
 
 
 
-        returnBtn.addActionListener(new ActionListener() //UTILIZZATO PER TORNARE AL FORM "AUTENTICAZIONE" DOPO LA REGISTRAZIONE
-        {
+        returnBtn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                String nome = nomeField.getText();
-                String cognome = cognomeField.getText();
-                String email = emailField.getText();
-                String password = passwordField.getText();
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String nome = nomeField.getText();
+                    String cognome = cognomeField.getText();
+                    String email = emailField.getText();
+                    if(!controller.isEmailValid(email))
+                    {
+                        JOptionPane.showMessageDialog(frame, "Email non valida.", "Errore", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    String password = new String(passwordField.getPassword());
+                    String dataNascita = dateField.getText();
+                    String[] campi = {nome, cognome, email, password, dataNascita};
 
+                    if (controller.isVuoto(campi)) {
+                        JOptionPane.showMessageDialog(frame, "Compilare tutti i campi.", "Campi vuoti", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        controller.reigstraUtente(email,nome,cognome,password,dataNascita);
+                        nomeField.setText("");
+                        cognomeField.setText("");
+                        emailField.setText("");
+                        passwordField.setText("");
+                        dateField.setText("");
 
-
-
-
-                controller.reigstraUtente(nomeField.getText(), passwordField.getText(),cognomeField.getText(), emailField.getText()); // da togliere nel caso
-                nomeField.setText("");
-                cognomeField.setText("");
-                emailField.setText("");
-                passwordField.setText("");
-
-                JOptionPane.showMessageDialog(frame, "Utente creato correttamente");
-                frame.setVisible(false);
-                frameC.setVisible(true);
-                frame.dispose();
+                        JOptionPane.showMessageDialog(frame, "Utente creato correttamente.");
+                        frame.setVisible(false);
+                        frameC.setVisible(true);
+                        frame.dispose();
+                    }
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(frame, "Formato della data non valido.", "Formato data errato", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
-        mostraCheckBox.addActionListener(new ActionListener() //METODO PER MOSTRARE LA PASSWORD TRAMITE UNA CHECKBOX
+
+        mostraCheckBox.addActionListener(new ActionListener()
         {
 
             @Override

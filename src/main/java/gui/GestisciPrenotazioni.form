@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.GestisciPrenotazioni">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="716" height="400"/>
+      <xy x="20" y="20" width="781" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <vspacer id="2a74c">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <grid id="85302" binding="searchPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -23,7 +18,7 @@
           <component id="677f7" class="javax.swing.JLabel" binding="searchLabel">
             <constraints/>
             <properties>
-              <text value="Inserire nome passeggero o numero del volo"/>
+              <text value="Inserire nome passeggero o codice del volo"/>
             </properties>
           </component>
           <component id="5c340" class="javax.swing.JTextField" binding="searchField">
@@ -38,10 +33,68 @@
               <text value="Cerca"/>
             </properties>
           </component>
+          <component id="3ead8" class="javax.swing.JButton" binding="cambiaPrenotazione">
+            <constraints/>
+            <properties>
+              <text value="Cambia"/>
+            </properties>
+          </component>
           <component id="f16b2" class="javax.swing.JButton" binding="cancelBtn">
             <constraints/>
             <properties>
               <text value="Annulla"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="f53db" binding="prenotazioniScroll">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="16e37" class="javax.swing.JList" binding="prenotazioniLista">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="e019a" binding="cancellaPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ce83a" class="javax.swing.JLabel" binding="cancellaPrenotazioneLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Cancellare la prenotazione?"/>
+            </properties>
+          </component>
+          <vspacer id="885de">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="799c6" class="javax.swing.JButton" binding="siBtn">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="SI"/>
+            </properties>
+          </component>
+          <component id="be30d" class="javax.swing.JButton" binding="noBtn">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="NO"/>
             </properties>
           </component>
         </children>

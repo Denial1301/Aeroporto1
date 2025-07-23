@@ -17,6 +17,7 @@ public class MainGUI {
         frameHome.setContentPane(new MainGUI().mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameHome.pack();
+        frameHome.setLocationRelativeTo(null);
         frameHome.setVisible(true);
         frameHome.setSize(500, 700);
 

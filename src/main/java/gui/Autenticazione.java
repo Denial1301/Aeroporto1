@@ -5,6 +5,8 @@ import controller.Controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Autenticazione
 {
@@ -29,9 +31,10 @@ public class Autenticazione
         frameHome = new JFrame("Autenticazione");
         frameHome.setContentPane(mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         frameHome.pack();
         frameHome.setVisible(true);
-        frameHome.setSize(400, 200);
+        frameHome.setSize(450, 200);
         controller = new Controller();
         registratiButton.addActionListener(new ActionListener()
         {
@@ -63,22 +66,25 @@ public class Autenticazione
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if (loginField.getText().equals("") || passwordField.getText().equals(""))
+                String password = String.valueOf(passwordField.getPassword());
+                String login = loginField.getText();
+                String[] campi = {login, password};
+                if (controller.isVuoto(campi))
                 {
-                    JOptionPane.showMessageDialog(frameHome,"Errore, dati mancanti ricontrollare i dati.");
+                    JOptionPane.showMessageDialog(frameHome,"Dati mancanti ricontrollare i dati.","Warning", JOptionPane.WARNING_MESSAGE);
 
                 }else
                  {
                      try {
-                         controller.login(loginField.getText(),passwordField.getText());
-                         if (loginField.getText().contains("amministratore"))
+                         controller.login(login,password);
+                         if (login.contains("amministratoreaeroportonapoli"))
                          {
-                            AdminForm adminForm = new AdminForm(frameHome, controller);
-                            adminForm.getFrame().setVisible(true);
+                            AdminPage adminPage = new AdminPage(frameHome, controller);
+                            adminPage.getFrame().setVisible(true);
                          }else
                          {
-                             UtenteForm utenteForm = new UtenteForm(frameHome,controller);
-                             utenteForm.getFrame().setVisible(true);
+                             UtentePage utentePage = new UtentePage(frameHome,controller);
+                             utentePage.getFrame().setVisible(true);
                          }
                          frameHome.setVisible(false);
                          loginField.setText("");
@@ -90,6 +96,29 @@ public class Autenticazione
                  }
             }
         });
+        loginField.addKeyListener(new KeyAdapter() { //VA ELIMINATA QUANDO FACCIAMO VEDERE AL PROF.
+            @Override
+            public void keyPressed(KeyEvent e) {
+                String login;
+                String password;
+                if (e.getKeyCode() == KeyEvent.VK_F2) {
+                    login = "andrea.colombo@amministratoreaeroportonapoli.it";
+                    password = "admin123";
+                    controller.login(login,password);
+                    frameHome.setVisible(false);
+                    AdminPage adminPage = new AdminPage(frameHome, controller);
+                    adminPage.getFrame().setVisible(true);
+                }else if(e.getKeyCode() == KeyEvent.VK_F1){
+                    login = "dani.guardascione@gmail.com";
+                    password = "123";
+                    controller.login(login,password);
+                    frameHome.setVisible(false);
+                    UtentePage utentePage = new UtentePage(frameHome, controller);
+                    utentePage.getFrame().setVisible(true);
+                }
+            }
+        });
+
 
     }
 }

@@ -1,35 +1,35 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Documento {
-    private boolean tipo;
-    private Date dataScadenza;
+    private boolean isPassaporto;
+    private LocalDate dataScadenza;
     private String numeroDocumento;
-    private Date dataEmissione;
+    private LocalDate dataEmissione;
 
-    // Costruttore
-    public Documento(boolean tipo, Date dataScadenza, String numeroDocumento, Date dataEmissione) {
-        this.tipo = tipo;
+
+    public Documento(boolean isPassaporto, LocalDate dataScadenza, String numeroDocumento, LocalDate dataEmissione) {
+        this.isPassaporto = isPassaporto;
         this.dataScadenza = dataScadenza;
         this.numeroDocumento = numeroDocumento;
         this.dataEmissione = dataEmissione;
     }
 
-    // Getter e setter (opzionali)
-    public boolean getTipo() {
-        return tipo;
+
+    public boolean getPassaporto() {
+        return isPassaporto;
     }
 
-    public void setTipo(boolean tipo) {
-        this.tipo = tipo;
+    public void setPassaporto(boolean isPassaporto) {
+        this.isPassaporto = isPassaporto;
     }
 
-    public Date getDataScadenza() {
+    public LocalDate getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(Date dataScadenza) {
+    public void setDataScadenza(LocalDate dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 
@@ -41,11 +41,11 @@ public class Documento {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public Date getDataEmissione() {
+    public LocalDate getDataEmissione() {
         return dataEmissione;
     }
 
-    public void setDataEmissione(Date dataEmissione) {
+    public void setDataEmissione(LocalDate dataEmissione) {
         this.dataEmissione = dataEmissione;
     }
 }

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.Prenota">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="1895" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="76e7e" binding="optionsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="c4ddf" class="javax.swing.JLabel" binding="passegerNLabel">
+            <constraints/>
+            <properties>
+              <text value="Nome passeggero"/>
+            </properties>
+          </component>
+          <component id="f023e" class="javax.swing.JTextField" binding="passegerNField">
+            <constraints/>
+            <properties>
+              <columns value="8"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="614ec" class="javax.swing.JLabel" binding="passegerCLabel">
+            <constraints/>
+            <properties>
+              <text value="Cognome"/>
+            </properties>
+          </component>
+          <component id="5fb7a" class="javax.swing.JTextField" binding="passegerCField">
+            <constraints/>
+            <properties>
+              <columns value="8"/>
+            </properties>
+          </component>
+          <component id="73b2" class="javax.swing.JLabel" binding="cfLabel">
+            <constraints/>
+            <properties>
+              <text value="Codice Fiscale"/>
+            </properties>
+          </component>
+          <component id="455d3" class="javax.swing.JTextField" binding="cfField">
+            <constraints/>
+            <properties>
+              <columns value="12"/>
+            </properties>
+          </component>
+          <component id="8109f" class="javax.swing.JLabel" binding="birthDateLabel">
+            <constraints/>
+            <properties>
+              <text value="Data Nascita(dd/MM/yyyy)"/>
+            </properties>
+          </component>
+          <component id="436fd" class="javax.swing.JTextField" binding="birthDateField">
+            <constraints/>
+            <properties>
+              <columns value="8"/>
+            </properties>
+          </component>
+          <component id="a0f4a" class="javax.swing.JLabel" binding="documentTypeLabel">
+            <constraints/>
+            <properties>
+              <text value="Tipo Documento"/>
+            </properties>
+          </component>
+          <component id="686cf" class="javax.swing.JComboBox" binding="documentTypeBox">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="5604f" class="javax.swing.JLabel" binding="numDocumentLabel">
+            <constraints/>
+            <properties>
+              <text value="Numero documento"/>
+            </properties>
+          </component>
+          <component id="a1e6b" class="javax.swing.JTextField" binding="numDocumentField">
+            <constraints/>
+            <properties>
+              <columns value="9"/>
+            </properties>
+          </component>
+          <component id="b0cca" class="javax.swing.JLabel" binding="dateDeadlineLabel">
+            <constraints/>
+            <properties>
+              <text value="Data scadenza"/>
+            </properties>
+          </component>
+          <component id="ee190" class="javax.swing.JTextField" binding="dateDeadlineField">
+            <constraints/>
+            <properties>
+              <columns value="8"/>
+            </properties>
+          </component>
+          <component id="8e805" class="javax.swing.JLabel" binding="emmisionDateLabel">
+            <constraints/>
+            <properties>
+              <text value="Data emissione"/>
+            </properties>
+          </component>
+          <component id="ed2f9" class="javax.swing.JTextField" binding="emmisionDateField">
+            <constraints/>
+            <properties>
+              <columns value="8"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="ff7ef" binding="btnPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="637ed" class="javax.swing.JButton" binding="cancelBtn">
+            <constraints/>
+            <properties>
+              <text value="Annulla"/>
+            </properties>
+          </component>
+          <component id="86e89" class="javax.swing.JButton" binding="confirmBtn">
+            <constraints/>
+            <properties>
+              <text value="Conferma"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="e5a21" class="javax.swing.JLabel" binding="voliPartenzaLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Voli che partono da Napoli"/>
+        </properties>
+      </component>
+      <component id="be16d" class="javax.swing.JLabel" binding="voliArrivo">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Voli che arrivano a Napoli"/>
+        </properties>
+      </component>
+      <scrollpane id="b6f26" binding="voliPartenzaScroll">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ca73c" class="javax.swing.JList" binding="voliPartenzaList">
+            <constraints/>
+            <properties>
+              <selectionMode value="0"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="3f79e" binding="voliArrivoScroll">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="65121" class="javax.swing.JList" binding="voliArrivoList">
+            <constraints/>
+            <properties>
+              <selectionMode value="0"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="6a428" binding="cercaVoloPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="80086" class="javax.swing.JLabel" binding="cercaVoloLabel">
+            <constraints/>
+            <properties>
+              <text value="cerca un volo:"/>
+            </properties>
+          </component>
+          <component id="de961" class="javax.swing.JLabel" binding="cercaStatoLabel">
+            <constraints/>
+            <properties>
+              <text value="Stato"/>
+            </properties>
+          </component>
+          <component id="27537" class="javax.swing.JComboBox" binding="statoBox">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="1a695" class="javax.swing.JLabel" binding="cercaCodiceLabel">
+            <constraints/>
+            <properties>
+              <text value="Codice"/>
+            </properties>
+          </component>
+          <component id="2a646" class="javax.swing.JTextField" binding="cercaCodiceField">
+            <constraints/>
+            <properties>
+              <columns value="6"/>
+            </properties>
+          </component>
+          <component id="22ac" class="javax.swing.JLabel" binding="cercaCompagniaLabel">
+            <constraints/>
+            <properties>
+              <text value="Compagnia"/>
+            </properties>
+          </component>
+          <component id="3773f" class="javax.swing.JTextField" binding="cercaCompagniaField">
+            <constraints/>
+            <properties>
+              <columns value="7"/>
+            </properties>
+          </component>
+          <component id="fc5c9" class="javax.swing.JButton" binding="trovaBtn">
+            <constraints/>
+            <properties>
+              <text value="Trova"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

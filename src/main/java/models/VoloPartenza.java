@@ -1,35 +1,43 @@
 package models;
 
 import java.time.*;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 public class VoloPartenza extends Volo {
-    private String gateimbarco;
-    private  String arrivo;
+    private String gateImbarco;
 
-    public VoloPartenza(String codice, String compagnia, String aereoporto_origine, String aereoporto_destinazione, LocalDate datavolo, LocalTime oraarrivo, int ritardo, int numPosti,String gateimbarco) {
-        super(codice, compagnia, aereoporto_origine, aereoporto_destinazione, datavolo, oraarrivo, ritardo, numPosti);
-        this.gateimbarco = gateimbarco;
-        this.arrivo = arrivo;
+
+    public VoloPartenza(String codice, String compagnia, String aereoportoOrigine, String aereoportoDestinazione, LocalDate dataVolo, LocalTime oraPartenza,LocalTime oraArrivo,
+                        int ritardo, int numPosti,StatoVolo registro,String gateImbarco) {
+        super(codice, compagnia, aereoportoOrigine, aereoportoDestinazione, dataVolo, oraPartenza,oraArrivo, ritardo, numPosti,registro);
+        this.gateImbarco = gateImbarco;
     }
 
 
-    // Getter e Setter per gateimbarco
-    public String getGateimbarco() {
-        return gateimbarco;
+
+
+    public String getGateImbarco() {
+        return gateImbarco;
     }
 
-    public void setGateimbarco(String gateimbarco) {
-        this.gateimbarco = gateimbarco;
+    public void setGateImbarco(String gateImbarco) {
+        this.gateImbarco = gateImbarco;
     }
 
-    // Getter e Setter per arrivo
-    public String getArrivo() {
-        return arrivo;
-    }
+    @Override
+    public String toString(){
 
-    public void setArrivo(String arrivo) {
-        this.arrivo = arrivo;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        return super.toString() + ", destinazione ='" + super.getAeroportoDestinazione() + '\'' +
+
+                ", Partenza=" + super.getOraPartenza().format(timeFormatter) +
+                ", Arrivo=" + super.getOraArrivo().format(timeFormatter) +
+                ", Gate=" + gateImbarco +
+                " , Stato=" + super.getRegistro().toString() +
+                ".";
+
+
     }
 
 }
