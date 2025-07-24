@@ -41,6 +41,7 @@ public class PasseggeroDAOImpl implements PasseggeroDAO {
                     ps.executeUpdate();
                 }
 
+
             }catch(SQLException e){
                 e.printStackTrace();
             }

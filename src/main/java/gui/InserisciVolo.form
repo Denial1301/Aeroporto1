@@ -123,7 +123,10 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+          <text value="180"/>
+        </properties>
       </component>
       <component id="ce423" class="javax.swing.JTextField" binding="dateField">
         <constraints>

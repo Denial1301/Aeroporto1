@@ -242,7 +242,7 @@ public class Prenota {
                     fgColor = Color.WHITE;
                     break;
                 case "Programmato":
-                    bgColor = new Color(0, 128, 0); // verde
+                    bgColor = Color.BLUE;
                     fgColor = Color.WHITE;
                     break;
                 case "In_Ritardo":
@@ -250,9 +250,12 @@ public class Prenota {
                     fgColor = Color.BLACK;
                     break;
                 case "Decollato":
-                    bgColor = new Color(138, 43, 226); // viola
-                    fgColor = Color.WHITE;
+                    bgColor = Color.CYAN;
+                    fgColor = Color.BLACK;
                     break;
+                case "Atterrato":
+                    bgColor = Color.GREEN;
+                    fgColor = Color.BLACK;
             }
 
             if (isSelected) {

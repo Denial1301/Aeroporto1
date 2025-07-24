@@ -78,6 +78,8 @@ public class ModifcaVoli {
         controller.getGate(gate);
         statoBox.addItem("Programmato");
         statoBox.addItem("Cancellato");
+        statoBox.addItem("Atterrato");
+        statoBox.addItem("Decollato");
         statoBox.setSelectedIndex(0);
         gateBox.addItem("-");
 
@@ -89,8 +91,6 @@ public class ModifcaVoli {
         DefaultListModel<String> listaArrivo = new DefaultListModel<>();
         for(int i = 0; i < gate.size(); i++)
         {
-            if(gate.get(i).startsWith("NAP"))
-                continue;
             gateBox.addItem(gate.get(i));
         }
         ArrayList<String> listaVoliPartenza = new ArrayList<>();
@@ -124,15 +124,6 @@ public class ModifcaVoli {
                     arrivoField.setText(oraArrivo);
                     partenzaField.setText(oraPartenza);
                     ritardoField.setText("0");
-                    for(int i = 0 ; i < gateBox.getItemCount(); i++)
-                    {
-                        String gateStr = gateBox.getItemAt(i).toString();
-                        if(gateStr.startsWith(gate))
-                        {
-                            gateBox.setSelectedItem(gateStr);
-                            break;
-                        }
-                    }
 
                     modificaPanel.setVisible(true);
                     gateLabel.setVisible(true);
@@ -186,8 +177,7 @@ public class ModifcaVoli {
                     LocalTime partenza = LocalTime.parse(partenzaField.getText(), timeFormatter);
                     LocalDate data = LocalDate.parse(dataField.getText(),dateFormatter);
                     int ritardo = Integer.parseInt(ritardoField.getText());
-                    String selectedGate = gateBox.getSelectedItem().toString();
-                    String gate = selectedGate.substring(0,selectedGate.indexOf('(')) ;
+                    String gate = gateBox.getSelectedItem().toString();
                     String stato = statoBox.getSelectedItem().toString();
                     controller.updateVolo(isPartenza,codice, compagniaField.getText(),data,arrivo,partenza,stato,ritardo,gate);
                     JOptionPane.showMessageDialog(frameC, "Volo aggiornato con successo","Info",JOptionPane.INFORMATION_MESSAGE);
@@ -198,6 +188,16 @@ public class ModifcaVoli {
                     voliPartenzaList.setCellRenderer(coloraRiga);
                     voliArrivoList.setModel(creaLista(listaVoliArrivo));
                     voliArrivoList.setCellRenderer(coloraRiga);
+                    gateBox.setSelectedIndex(0);
+                    ArrayList<String> gateAggiornati = new ArrayList<>();
+                    controller.getGate(gateAggiornati);
+                    gateBox.removeAllItems();
+                    gateBox.addItem("-");
+                    for (String g : gateAggiornati) {
+                        gateBox.addItem(g);
+                    }
+
+
 
 
 
@@ -253,7 +253,7 @@ public class ModifcaVoli {
                     fgColor = Color.WHITE;
                     break;
                 case "Programmato":
-                    bgColor = new Color(0, 128, 0);
+                    bgColor = Color.BLUE;
                     fgColor = Color.WHITE;
                     break;
                 case "In_Ritardo":
@@ -261,9 +261,12 @@ public class ModifcaVoli {
                     fgColor = Color.BLACK;
                     break;
                 case "Decollato":
-                    bgColor = new Color(138, 43, 226);
-                    fgColor = Color.WHITE;
+                    bgColor = Color.CYAN;
+                    fgColor = Color.BLACK;
                     break;
+                case "Atterrato":
+                    bgColor = Color.GREEN;
+                    fgColor = Color.BLACK;
             }
 
             if (isSelected) {

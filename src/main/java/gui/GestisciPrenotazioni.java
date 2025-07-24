@@ -178,8 +178,8 @@ public class GestisciPrenotazioni {
                             fgColor = Color.WHITE;
                             break;
                         case "Confermata":
-                            bgColor = new Color(0, 128, 0);
-                            fgColor = Color.WHITE;
+                            bgColor = Color.GREEN;
+                            fgColor = Color.BLACK;
                             break;
                     }
 

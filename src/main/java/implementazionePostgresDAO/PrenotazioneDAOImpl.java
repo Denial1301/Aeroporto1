@@ -57,18 +57,21 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
 
         if(ricerca.isEmpty())
         {
-            sql =    "SELECT P.n_prenotazioni, P.posto,P.stato_prenotazioni,P.codice,P.cf,PA.nome, PA.cognome FROM PRENOTAZIONI p\n" +
-                    "JOIN PASSEGGERO PA ON P.cf = PA.cf\n" +
-                    "JOIN VOLO V ON P.codice = V.codice\n"+
-                    "WHERE P.email_utente = ?";
+            sql =   "SELECT P.n_prenotazioni, P.posto,P.stato_prenotazioni,P.codice,P.cf,PA.nome, PA.cognome FROM PRENOTAZIONI p " +
+                    " JOIN PASSEGGERO PA ON P.cf = PA.cf" +
+                    " JOIN VOLO V ON P.codice = V.codice"+
+                    " WHERE P.email_utente = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, email);
 
         } else {
-            sql = "SELECT P.n_prenotazioni, P.posto,P.stato_prenotazioni,P.codice,P.cf,PA.nome, PA.cognome FROM PRENOTAZIONI p\n" +
-                    "JOIN PASSEGGERO PA ON P.cf = PA.cf\n" +
-                    "JOIN VOLO V ON P.codice = V.codice\n" +
-                    "WHERE LOWER(PA.nome) LIKE LOWER(?) OR LOWER(V.codice) = LOWER(?) AND P.email_utente = ?";
+            sql = "SELECT P.n_prenotazioni, P.posto, P.stato_prenotazioni, P.codice, P.cf, PA.nome, PA.cognome " +
+                    " FROM PRENOTAZIONI P " +
+                    " JOIN PASSEGGERO PA ON P.cf = PA.cf " +
+                    " JOIN VOLO V ON P.codice = V.codice " +
+                    " WHERE (LOWER(PA.nome) LIKE LOWER(?) OR LOWER(V.codice) = LOWER(?)) " +
+                    " AND P.email_utente = ?";
+
             ps = connection.prepareStatement(sql);
             ps.setString(1, ricerca);
             ps.setString(2, ricerca);
@@ -188,7 +191,7 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
         ArrayList<String> tuttiPosti = new ArrayList<>();
         char fila = 'A';
         for (int i = 0; i<3; i++) {
-            fila+=i;
+            fila+= (char) i;
             for (int numero = 1; numero <= postiTotali; numero++) {
                 tuttiPosti.add(fila+String.valueOf(numero));
             }

@@ -107,7 +107,7 @@ public class Controller {
                              String aeroportoDestinazione, LocalDate dataVolo, LocalTime oraPartenza,
                              LocalTime oraArrivo, int ritardo, int numPosti,String stato) {
 
-        StatoVolo registro = StatoVolo.valueOf(stato);
+
         voliDAO.addVoli(codice,compagnia,aeroportoOrigine,aeroportoDestinazione,dataVolo,oraPartenza,oraArrivo,stato,numPosti,ritardo);
 
     }
@@ -458,7 +458,7 @@ public class Controller {
         ArrayList<String> posto = new ArrayList<>();
         ArrayList<String> stato = new ArrayList<>();
         ArrayList<String> codiceVolo = new ArrayList<>();
-        ArrayList<String> emailUtente = new ArrayList<>();
+
         ArrayList<String> cf= new ArrayList<>();
         prenotazioneDAO.getPrenotazioni(nome,cognome,numPrenotazione,posto,stato,codiceVolo,cf);
         ArrayList<String> prenotazione = new ArrayList<>();

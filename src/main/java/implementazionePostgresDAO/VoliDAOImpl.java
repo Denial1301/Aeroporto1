@@ -69,21 +69,35 @@ private Connection connection;
     {
         try {
             PreparedStatement ps;
-            String sql;
+            String sql = "";
 
-            if (stato.equals("Programmato")) {
-                sql = "UPDATE VOLO SET compagnia = ?, data_volo = ?, ora_volo = ?, ora_partenza = ?, stato = ?::stato_volo, ritardo = ?,gate = ? WHERE codice = ?";
-                ps = connection.prepareStatement(sql);
-                ps.setString(1, compagnia);
-                ps.setDate(2, Date.valueOf(data));
-                ps.setTime(3, Time.valueOf(arrivo));
-                ps.setTime(4, Time.valueOf(partenza));
-                ps.setString(5, stato);
-                ps.setInt(6, ritardo);
-                ps.setString(7, gate);
-                ps.setString(8, codice);
+
+            if (stato.equals("Programmato") || stato.equals("Decollato") || stato.equals("Atterrato")) {
+                if (gate.equals("-")) {
+
+                    sql = "UPDATE VOLO SET compagnia = ?, data_volo = ?, ora_volo = ?, ora_partenza = ?, stato = ?::stato_volo, ritardo = ? WHERE codice = ?";
+                    ps = connection.prepareStatement(sql);
+                    ps.setString(1, compagnia);
+                    ps.setDate(2, Date.valueOf(data));
+                    ps.setTime(3, Time.valueOf(arrivo));
+                    ps.setTime(4, Time.valueOf(partenza));
+                    ps.setString(5, stato);
+                    ps.setInt(6, ritardo);
+                    ps.setString(7, codice);
+                } else {
+                    sql = "UPDATE VOLO SET compagnia = ?, data_volo = ?, ora_volo = ?, ora_partenza = ?, stato = ?::stato_volo, ritardo = ?, gate = ? WHERE codice = ?";
+                    ps = connection.prepareStatement(sql);
+                    ps.setString(1, compagnia);
+                    ps.setDate(2, Date.valueOf(data));
+                    ps.setTime(3, Time.valueOf(arrivo));
+                    ps.setTime(4, Time.valueOf(partenza));
+                    ps.setString(5, stato);
+                    ps.setInt(6, ritardo);
+                    ps.setString(7, gate);
+                    ps.setString(8, codice);
+                }
                 ps.executeUpdate();
-                System.out.println("UPDATE VOLO: " + codice + " - " + stato);
+
 
 
             } else if (stato.equals("Cancellato")) {

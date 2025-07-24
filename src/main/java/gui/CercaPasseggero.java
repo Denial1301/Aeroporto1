@@ -24,6 +24,7 @@ public class CercaPasseggero {
     private JLabel cfLabel;
     private JTextField cfField;
     private JButton cercaBtn;
+    private JButton indietroBtn;
     private Controller controller;
     private JFrame frame;
 
@@ -75,6 +76,14 @@ public class CercaPasseggero {
                 } catch (IllegalArgumentException ex) {
                    JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore",JOptionPane.ERROR_MESSAGE);
                 }
+
+            }
+        });
+        indietroBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameC.setVisible(true);
+                frame.dispose();
 
             }
         });

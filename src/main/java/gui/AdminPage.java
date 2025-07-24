@@ -9,6 +9,9 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 public class AdminPage
 {
@@ -46,6 +49,15 @@ public class AdminPage
         String[] colonneArrivo = {"Codice","Compagnia","Origine","Data","Partenza","Arrivo","Posti","Ritardo","Stato"};
         aggiornaTabella(colonnePartenza,partenzaVoliTable,true);
         aggiornaTabella(colonneArrivo,arriviVoliTable,false);
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+
+                aggiornaTabella(colonnePartenza, partenzaVoliTable, true);
+                aggiornaTabella(colonneArrivo, arriviVoliTable, false);
+
+            }
+        });
         insertFlyBtn.addActionListener(new ActionListener() {
 
             @Override
@@ -98,15 +110,15 @@ public class AdminPage
         table.setCellSelectionEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
         table.setModel(model);
-        TableCellRenderer ritardo = aggiornaRitardo();
-        TableCellRenderer stato = aggiornaStatoRenderer();
+        TableCellRenderer ritardo = coloraRitardo();
+        TableCellRenderer stato = coloraColonna();
         table.getColumnModel().getColumn(7).setCellRenderer(ritardo);
         table.getColumnModel().getColumn(8).setCellRenderer(stato);
 
     }
 
 
-    public TableCellRenderer aggiornaRitardo() {
+    public TableCellRenderer coloraRitardo() {
         return new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -126,6 +138,7 @@ public class AdminPage
                 } else
                 {
                     c.setBackground(Color.RED);
+                    c.setForeground(Color.WHITE);
                 }
 
 
@@ -134,7 +147,7 @@ public class AdminPage
             }
         };
     }
-    public TableCellRenderer aggiornaStatoRenderer() {
+    public TableCellRenderer coloraColonna() {
         return new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -145,14 +158,21 @@ public class AdminPage
                 switch (stato) {
                     case "In_Ritardo":
                         c.setBackground(Color.ORANGE);
+                        c.setForeground(Color.BLACK);
                         break;
                     case "Cancellato":
                         c.setBackground(Color.RED);
+                        c.setForeground(Color.WHITE);
                         break;
                     case "Decollato":
                         c.setBackground(Color.CYAN);
+                        c.setForeground(Color.BLACK);
                         break;
-                    default:
+                    case "Programmato":
+                        c.setBackground(Color.BLUE);
+                        c.setForeground(Color.WHITE);
+                        break;
+                    case "Atterrato":
                         c.setBackground(Color.GREEN);
                         break;
                 }

@@ -26,20 +26,17 @@ public class GateDAOImpl implements GateDAO
     @Override
 
     public void getGate(ArrayList<String> gateList) {
-        String sql = "SELECT g.gate_id, v.codice " +
-                "FROM gate g LEFT JOIN volo v ON v.gate = g.gate_id " +
-                "ORDER BY g.gate_id ASC";
+        String sql = "SELECT gate_id " +
+                "FROM gate  WHERE stato = 'Libero'  " +
+                "ORDER BY gate_id ASC";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String gateId = rs.getString("gate_id");
-                String codiceVolo = rs.getString("codice");
-                if (codiceVolo == null) {
-                    codiceVolo = "-";
-                }
-                // esempio: "A7(ABC123)" oppure "A5(-)"
-                gateList.add(gateId + "(" + codiceVolo + ")");
+
+
+                gateList.add(gateId);
             }
             rs.close();
         } catch (SQLException e) {
