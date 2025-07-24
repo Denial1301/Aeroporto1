@@ -42,6 +42,7 @@ public class ModifcaVoli {
     private JLabel ritardoLabel;
     private JTextField ritardoField;
     private JButton indietroBtn;
+    private JButton liberaGateBtn;
     private JFrame frame;
     private Controller controller;
     private String codice;
@@ -76,19 +77,14 @@ public class ModifcaVoli {
         ArrayList<String> gate = new ArrayList<>();
         controller.voliPrenotabili(partenza,arrivo);
         controller.getGate(gate);
-        statoBox.addItem("Programmato");
-        statoBox.addItem("Cancellato");
-        statoBox.addItem("Atterrato");
-        statoBox.addItem("Decollato");
+        statoBox.addItem("Programmato.");
+        statoBox.addItem("Cancellato.");
+        statoBox.addItem("Atterrato.");
+        statoBox.addItem("Decollato.");
         statoBox.setSelectedIndex(0);
         gateBox.addItem("-");
 
 
-
-
-
-        DefaultListModel<String> listaPartenza = creaLista(partenza);
-        DefaultListModel<String> listaArrivo = new DefaultListModel<>();
         for(int i = 0; i < gate.size(); i++)
         {
             gateBox.addItem(gate.get(i));
@@ -114,7 +110,10 @@ public class ModifcaVoli {
                     String data = campi[2].split("=")[1].replace("'", "").trim();
                     String oraPartenza = campi[4].split("=")[1].replace("'", "").trim();
                     String oraArrivo = campi[5].split("=")[1].replace("'", "").trim();
-                    String gate = campi[6].split("=")[1].replace(".", "").trim();
+                    String stato = campi[7].split("=")[1].replace("'", "").trim();
+                    statoBox.setSelectedItem(stato);
+
+
                     isPartenza = true;
 
 
@@ -124,6 +123,7 @@ public class ModifcaVoli {
                     arrivoField.setText(oraArrivo);
                     partenzaField.setText(oraPartenza);
                     ritardoField.setText("0");
+                    liberaGateBtn.setVisible(true);
 
                     modificaPanel.setVisible(true);
                     gateLabel.setVisible(true);
@@ -145,6 +145,7 @@ public class ModifcaVoli {
                     String data = campi[2].split("=")[1].replace("'", "").trim();
                     String oraPartenza = campi[4].split("=")[1].replace("'", "").trim();
                     String oraArrivo = campi[5].split("=")[1].replace(".", "").trim();
+
                     isPartenza = false;
                     gateBox.setSelectedItem(0);
 
@@ -161,6 +162,7 @@ public class ModifcaVoli {
                     modificaPanel.setVisible(true);
                     gateBox.setVisible(false);
                     gateLabel.setVisible(false);
+                    liberaGateBtn.setVisible(false);
                     voliPartenzaList.clearSelection();
 
                 }
@@ -215,6 +217,33 @@ public class ModifcaVoli {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 frameC.setVisible(true);
+            }
+        });
+        liberaGateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             try{
+                 controller.liberaGate(codice);
+                 JOptionPane.showMessageDialog(frame,"Gate liberato!","Operazione riuscita",JOptionPane.INFORMATION_MESSAGE);
+                 ArrayList<String> listaVoliPartenza = new ArrayList<>();
+                 ArrayList<String> listaVoliArrivo = new ArrayList<>();
+                 controller.voliPrenotabili(listaVoliPartenza,listaVoliArrivo);
+                 voliPartenzaList.setModel(creaLista(listaVoliPartenza));
+                 voliPartenzaList.setCellRenderer(coloraRiga);
+                 voliArrivoList.setModel(creaLista(listaVoliArrivo));
+                 voliArrivoList.setCellRenderer(coloraRiga);
+                 gateBox.setSelectedIndex(0);
+                 ArrayList<String> gateAggiornati = new ArrayList<>();
+                 controller.getGate(gateAggiornati);
+                 gateBox.removeAllItems();
+                 gateBox.addItem("-");
+                 for (String g : gateAggiornati) {
+                     gateBox.addItem(g);
+                 }
+
+             }catch (IllegalArgumentException ex){
+                 JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore",JOptionPane.ERROR_MESSAGE);
+             }
             }
         });
 

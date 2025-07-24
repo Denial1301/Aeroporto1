@@ -13,4 +13,5 @@ public interface GateDAO
      * @param gate the gate
      */
     public void getGate(ArrayList<String> gate);
+    public void liberaGate(String codice);
 }

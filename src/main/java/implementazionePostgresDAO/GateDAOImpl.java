@@ -44,4 +44,42 @@ public class GateDAOImpl implements GateDAO
         }
     }
 
+    @Override
+    public void liberaGate(String codiceVolo) throws IllegalArgumentException {
+        String gate = null;
+
+
+        String selectSQL = "SELECT gate FROM volo WHERE codice = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(selectSQL);
+            ps.setString(1, codiceVolo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    gate = rs.getString("gate");
+                }
+            }
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+
+
+        if (gate == null || gate.isEmpty() || gate.equals("-")) {
+            throw new IllegalArgumentException("Errore: il volo non ha un gate assegnato.");
+        }
+        String aggiornaGateSQL = "UPDATE gate SET stato = 'Libero' WHERE gate_id = ?";
+        String aggiornaVoloSQL = "UPDATE volo SET gate = NULL WHERE codice = ?";
+
+        try  {
+            PreparedStatement ps = connection.prepareStatement(aggiornaGateSQL);
+            PreparedStatement ps2 = connection.prepareStatement(aggiornaVoloSQL);
+            ps2.setString(1, codiceVolo);
+            ps.setString(1, gate);
+            ps.executeUpdate();
+            ps2.executeUpdate();
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+    }
+
+
 }

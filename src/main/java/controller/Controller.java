@@ -1,4 +1,5 @@
 package controller;
+import dao.VoliDAO;
 import implementazionePostgresDAO.*;
 import models.*;
 import db.*;
@@ -712,6 +713,14 @@ public class Controller {
        }
        return false;
 
+    }
+
+    public void liberaGate(String codice) throws IllegalArgumentException {
+        try{
+            gateDAO.liberaGate(codice);
+        }catch (IllegalArgumentException e){
+            throw e;
+        }
     }
 
     }
