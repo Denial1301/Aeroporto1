@@ -13,8 +13,9 @@ import java.util.ArrayList;
 public interface PrenotazioneDAO {
     /**
      * Gets prenotazioni.
-     *<p>
+     * <p>
      * Serve per poter prendere tutte le prenotazioni dal DB.
+     *
      * @param nome            the nome
      * @param cognome         the cognome
      * @param numPrenotazione the num prenotazione
@@ -55,6 +56,7 @@ public interface PrenotazioneDAO {
      * Genera codice prenotazione string.
      * <p>
      * * Genera un codice progressivo per le prenotazioni, con formato "PR000".
+     *
      * @return the string
      */
     public String generaCodicePrenotazione();
@@ -63,6 +65,7 @@ public interface PrenotazioneDAO {
      * Add prenotazione.
      * <p>
      * Aggiunge la prenotazione effettuate nel DB.
+     *
      * @param posto           the posto
      * @param cf              the cf
      * @param email           the email
@@ -75,6 +78,7 @@ public interface PrenotazioneDAO {
      * Genera posti liberi array list.
      * <p>
      * Genera tutti i posti disponibili per quel volo calcolando la fila(A, B, C) e il numero(da 1 a 45).
+     *
      * @param codice      the codice
      * @param postiTotali the posti totali
      * @return the array list
@@ -90,7 +94,21 @@ public interface PrenotazioneDAO {
      * @param isConfermata    in base al suo valore, lo stato diventa "Confermata" oppure "Cancellata"
      */
     public void confermaPrenotazione(String numPrenotazione,boolean isConfermata);
+
+    /**
+     * Update prenotazione.
+     *
+     * @param cf        the cf
+     * @param cfVecchio the cf vecchio
+     */
     public void updatePrenotazione(String cf,String cfVecchio);
 
+    /**
+     * Cancella prenotazione.
+     *
+     * @param email  the email
+     * @param codice the codice
+     * @param cf     the cf
+     */
     public void cancellaPrenotazione(String email,String codice,String cf);
 }
