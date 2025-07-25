@@ -12,5 +12,7 @@ public interface DocumentoDAO {
      * @param dataScadenza  the data scadenza
      */
     public void addDocumento(String numDocumento, boolean isPassaporto, LocalDate dataEmissione, LocalDate dataScadenza);
+    public void updateDocumento(String numDoc,
+                                LocalDate dataEmissione,LocalDate dataScadenza,String cfVecchio);
 
 }

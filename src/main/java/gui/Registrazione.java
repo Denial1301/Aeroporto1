@@ -87,6 +87,8 @@ public class Registrazione {
                     }
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(frame, "Formato della data non valido.", "Formato data errato", JOptionPane.ERROR_MESSAGE);
+                }catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

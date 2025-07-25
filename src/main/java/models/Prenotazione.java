@@ -18,14 +18,7 @@ public Prenotazione(String nome, String cognome,String numPrenotazione, String p
     this.codiceVolo = codiceVolo;
     this.cf = cf;
     }
-    public Prenotazione(String numPrenotazione, String posto, StatoPrenotazione stato, String codiceVolo, String cf)
-    {
-        this.numPrenotazione = numPrenotazione;
-        this.posto = posto;
-        this.stato = stato;
-        this.codiceVolo = codiceVolo;
-        this.cf = cf;
-    }
+
 
 
     @Override

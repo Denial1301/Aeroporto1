@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -106,6 +107,8 @@ public class InserisciVolo {
 
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(frame, "Formattazione della data o ora errata.","Errore", JOptionPane.ERROR_MESSAGE);
+                }catch (DateTimeException ex) {
+                    JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

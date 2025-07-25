@@ -4,6 +4,7 @@ package dao;
 
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -89,6 +90,7 @@ public interface PrenotazioneDAO {
      * @param isConfermata    in base al suo valore, lo stato diventa "Confermata" oppure "Cancellata"
      */
     public void confermaPrenotazione(String numPrenotazione,boolean isConfermata);
-    public void updatePrenotazione(String nome, String cognome, String email,String codice,String cf);
+    public void updatePrenotazione(String cf,String cfVecchio);
+
     public void cancellaPrenotazione(String email,String codice,String cf);
 }

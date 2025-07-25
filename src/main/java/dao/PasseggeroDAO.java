@@ -44,5 +44,7 @@ public interface PasseggeroDAO {
      * @param dataNascita  the data nascita
      */
     public void getAllPasseggero(ArrayList<String> nome, ArrayList<String> cognome, ArrayList<String> numDocumento, ArrayList<String> cf, ArrayList<LocalDate> dataNascita);
+    public void updatePasseggero(String nome, String cognome, String cf, String numDoc, LocalDate dataNascita,
+                                 LocalDate dataEmissione,LocalDate dataScadenza,String email,String codice,String cfVecchio);
 
 }

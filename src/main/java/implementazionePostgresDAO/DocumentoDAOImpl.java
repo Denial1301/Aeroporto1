@@ -39,4 +39,22 @@ public class DocumentoDAOImpl implements DocumentoDAO {
         }
 
     }
+
+    @Override
+    public void updateDocumento(String numDoc, LocalDate dataEmissione, LocalDate dataScadenza,String cfVecchio) {
+
+        String sql = "UPDATE DOCUMENTO  SET numero_documento = ?, data_emissione = ?, data_scadenza = ?  WHERE numero_documento = (SELECT numero_documento FROM PASSEGGERO " +
+                " WHERE cf = ?) ";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, numDoc);
+            ps.setDate(2, Date.valueOf(dataEmissione));
+            ps.setDate(3, Date.valueOf(dataScadenza));
+            ps.setString(4, cfVecchio);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

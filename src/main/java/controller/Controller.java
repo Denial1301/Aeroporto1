@@ -1,8 +1,7 @@
 package controller;
-import dao.VoliDAO;
+
 import implementazionePostgresDAO.*;
 import models.*;
-import db.*;
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -15,9 +14,9 @@ import java.util.Random;
  */
 public class Controller {
 
-    private ArrayList<Volo> volo;
 
-    private Connection connection;
+
+
 
     private VoliDAOImpl voliDAO = new VoliDAOImpl();
 
@@ -35,19 +34,9 @@ public class Controller {
     private String emailLogin;
     private final int postiTotali = 45;
     private Random rand = new Random();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    /**
-     * Instantiates a new Controller.
-     */
-    public Controller() {
-    try {
-        connection = ConnessioneDatabase.getInstance();
-
-    }catch (SQLException e){
-        e.printStackTrace();
-    }
-}
 
     /**
      * Reigstra utente.
@@ -61,8 +50,12 @@ public class Controller {
     public void reigstraUtente(String email, String nome, String cognome, String password,String dataNascita) {
 
 
-        LocalDate dataNascitaSQL = LocalDate.parse(dataNascita, formatter);
-        utenteDAO.addUtente(email,nome,cognome,password,dataNascitaSQL);
+        LocalDate dataNascitaSQL = LocalDate.parse(dataNascita, dataFormatter);
+        try {
+            utenteDAO.addUtente(email,nome,cognome,password,dataNascitaSQL);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
 
     }
 
@@ -103,12 +96,15 @@ public class Controller {
      * @param ritardo               the ritardo
      * @param numPosti              the num posti
      * @param stato                 the stato
+     * @throws DateTimeException the date time exception
      */
     public void registraVolo(String codice, String compagnia, String aeroportoOrigine,
                              String aeroportoDestinazione, LocalDate dataVolo, LocalTime oraPartenza,
-                             LocalTime oraArrivo, int ritardo, int numPosti,String stato) {
+                             LocalTime oraArrivo, int ritardo, int numPosti,String stato) throws DateTimeException {
 
-
+        if(oraPartenza.isAfter(oraArrivo)) {
+            throw new DateTimeException("Ora partenza maggiore di ora arrivo.");
+        }
         voliDAO.addVoli(codice,compagnia,aeroportoOrigine,aeroportoDestinazione,dataVolo,oraPartenza,oraArrivo,stato,numPosti,ritardo);
 
     }
@@ -204,10 +200,11 @@ public class Controller {
 
 
         for (Volo v : tuttiVoli) {
-            if(v instanceof VoloPartenza)
+
+            if(v instanceof VoloPartenza && v.getRegistro().toString()=="Programmato" || v.getRegistro().toString()=="In_Ritardo")
             {
                 voliPrenotabiliPartenza.add(v.toString());
-            }else if(v instanceof VoloArrivo)
+            }else if(v instanceof VoloArrivo && v.getRegistro().toString()=="Programmato" || v.getRegistro().toString()=="In_Ritardo")
             {
                 voliPrenotabiliArrivo.add(v.toString());
             }
@@ -217,6 +214,30 @@ public class Controller {
         }
 
 
+
+
+    }
+
+    /**
+     * Tutti voli.
+     *
+     * @param voliPrenotabiliPartenza the voli prenotabili partenza
+     * @param voliPrenotabiliArrivo   the voli prenotabili arrivo
+     */
+    public void tuttiVoli(ArrayList<String> voliPrenotabiliPartenza, ArrayList<String> voliPrenotabiliArrivo) {
+        ArrayList<Volo> tuttiVoli = getListaVoli();
+
+
+        for (Volo v : tuttiVoli) {
+
+            if (v instanceof VoloPartenza) {
+                voliPrenotabiliPartenza.add(v.toString());
+            } else if (v instanceof VoloArrivo) {
+                voliPrenotabiliArrivo.add(v.toString());
+            }
+
+
+        }
     }
 
 
@@ -366,7 +387,7 @@ public class Controller {
      * @param dataNascita  the data nascita
      */
     public void addPasseggero (String nome, String cognome, String numDocumento, String cf,String dataNascita) {
-        LocalDate dataNascitaSQL = LocalDate.parse(dataNascita, formatter);
+        LocalDate dataNascitaSQL = LocalDate.parse(dataNascita, dataFormatter);
         passeggeroDAO.addPasseggero(nome,cognome,numDocumento,cf,dataNascitaSQL);
     }
 
@@ -382,12 +403,17 @@ public class Controller {
      * @param tipo          the tipo
      * @param dataEmissione the data emissione
      * @param dataScadenza  the data scadenza
+     * @throws DateTimeException the date time exception
      */
-    public void addDocumento(String numDocumento,  String tipo, String dataEmissione,String dataScadenza)
+    public void addDocumento(String numDocumento,  String tipo, String dataEmissione,String dataScadenza) throws DateTimeException
     {
 
-        LocalDate dataEmissioneSQL = LocalDate.parse(dataEmissione, formatter);
-        LocalDate dataScadenzaSQL = LocalDate.parse(dataScadenza, formatter);
+        LocalDate dataEmissioneSQL = LocalDate.parse(dataEmissione, dataFormatter);
+        LocalDate dataScadenzaSQL = LocalDate.parse(dataScadenza, dataFormatter);
+        if(!dataScadenzaSQL.isAfter(dataEmissioneSQL))
+        {
+        throw new DateTimeException("Data scadenza più piccola della data emissione.");
+        }
         boolean isPassaporto;
         if(tipo.equals("Passaporto"))
         {
@@ -491,15 +517,45 @@ public class Controller {
     /**
      * Update prenotazione.
      *
-     * @param nome    the nome
-     * @param cognome the cognome
-     * @param email   the email
-     * @param codice  the codice
-     * @param cf      the cf
+     * @param cf        the cf
+     * @param cfVecchio the cf vecchio
      */
-    public void updatePrenotazione(String nome, String cognome, String email,String codice,String cf)
+    public void updatePrenotazione(String cf,String cfVecchio)
     {
-        prenotazioneDAO.updatePrenotazione(nome,cognome,email,codice,cf);
+        prenotazioneDAO.updatePrenotazione(cf,cfVecchio);
+    }
+
+    /**
+     * Update documento.
+     *
+     * @param numDoc        the num doc
+     * @param dataEmissione the data emissione
+     * @param dataScadenza  the data scadenza
+     * @param cfVecchio     the cf vecchio
+     */
+    public void updateDocumento( String numDoc,LocalDate dataEmissione,LocalDate dataScadenza,String cfVecchio)
+    {
+        documentoDAO.updateDocumento(numDoc,dataEmissione,dataScadenza,cfVecchio);
+    }
+
+    /**
+     * Update passeggero.
+     *
+     * @param nome          the nome
+     * @param cognome       the cognome
+     * @param cf            the cf
+     * @param numDoc        the num doc
+     * @param dataNascita   the data nascita
+     * @param dataEmissione the data emissione
+     * @param dataScadenza  the data scadenza
+     * @param email         the email
+     * @param codice        the codice
+     * @param cfVecchio     the cf vecchio
+     */
+    public void updatePasseggero(String nome, String cognome, String cf, String numDoc, LocalDate dataNascita,
+                                 LocalDate dataEmissione,LocalDate dataScadenza,String email,String codice,String cfVecchio)
+    {
+        passeggeroDAO.updatePasseggero(nome,cognome,cf,numDoc,dataNascita,dataEmissione,dataScadenza,email,codice,cfVecchio);
     }
 
     /**
@@ -537,17 +593,23 @@ public class Controller {
      * @param stato      the stato
      * @param ritardo    the ritardo
      * @param gate       the gate
+     * @throws DateTimeException the date time exception
      */
-    public void updateVolo(boolean isPartenza,String codice, String compagnia,LocalDate data,LocalTime arrivo,LocalTime partenza,String stato,int ritardo,String gate)
+    public void updateVolo(boolean isPartenza,String codice, String compagnia,LocalDate data,LocalTime arrivo,LocalTime partenza,
+                           String stato,int ritardo,String gate) throws DateTimeException
     {
-
+        if(partenza.isAfter(arrivo))
+        {
+            throw new DateTimeException("Ora partenza maggiore di ora arrivo");
+        }
         voliDAO.updateVoli(isPartenza,codice,compagnia,data,arrivo,partenza,stato,ritardo,gate);
 
     }
 
     /**
      * Voli filtrati array list.<p>
-     *In base a vari parametri, filtra i voli e crea un nuovo ArrayList della classe Volo.
+     * In base a vari parametri, filtra i voli e crea un nuovo ArrayList della classe Volo.
+     *
      * @param codice    the codice
      * @param compagnia the compagnia
      * @param stato     the stato
@@ -617,7 +679,7 @@ public class Controller {
 
     /**
      * Gets passeggero.<p>
-     *     Serve per creare un arrayList della classe Passeggero in modo da poter efettuare il toString negli altri metodi.
+     * Serve per creare un arrayList della classe Passeggero in modo da poter effettuare il toString negli altri metodi.
      *
      * @return the passeggero
      */
@@ -641,7 +703,7 @@ public class Controller {
 
     /**
      * Lista passeggero array list.<p>
-     *     Serve per creare una lista di stringhe dei passeggeri.
+     * Serve per creare una lista di stringhe dei passeggeri.
      *
      * @return the array list
      */
@@ -658,7 +720,7 @@ public class Controller {
 
     /**
      * Lista passeggero filtrato array list.<p>
-     *     Filtra i passeggeri in base al nome, cognome e codice fiscale.
+     * Filtra i passeggeri in base al nome, cognome e codice fiscale.
      *
      * @param nome    the nome
      * @param cognome the cognome
@@ -715,6 +777,12 @@ public class Controller {
 
     }
 
+    /**
+     * Libera gate.
+     *
+     * @param codice the codice
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void liberaGate(String codice) throws IllegalArgumentException {
         try{
             gateDAO.liberaGate(codice);

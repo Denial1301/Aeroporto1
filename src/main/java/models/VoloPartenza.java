@@ -20,9 +20,7 @@ public class VoloPartenza extends Volo {
         return gateImbarco;
     }
 
-    public void setGateImbarco(String gateImbarco) {
-        this.gateImbarco = gateImbarco;
-    }
+
 
     @Override
     public String toString(){

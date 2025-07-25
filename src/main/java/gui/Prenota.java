@@ -12,9 +12,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * The type Prenota.
+ */
 public class Prenota {
     private JPanel mainPanel;
     private JPanel optionsPanel;
@@ -55,10 +59,21 @@ public class Prenota {
     private JLabel stato;
     private JFrame frame;
 
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * Instantiates a new Prenota.
+     *
+     * @param frameC     the frame c
+     * @param controller the controller
+     */
     public Prenota(JFrame frameC, Controller controller) {
 
         frame = new JFrame("Prenotazione");
@@ -119,6 +134,8 @@ public class Prenota {
                     String dataNascita = birthDateField.getText();
                     String selezionato = (String) voliPartenzaList.getSelectedValue();
 
+
+
                     if(selezionato == null)
                     {
                         selezionato = (String) voliArrivoList.getSelectedValue();
@@ -146,6 +163,9 @@ public class Prenota {
                 } catch(NullPointerException ex) {
                     JOptionPane.showMessageDialog(frame,"Selezionare un volo dalla lista.","Volo non selezionato", JOptionPane.WARNING_MESSAGE);
                 }catch(SQLException ex) {
+                    JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore", JOptionPane.ERROR_MESSAGE);
+                }catch(DateTimeException ex)
+                {
                     JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -207,6 +227,13 @@ public class Prenota {
 
 
     }
+
+    /**
+     * Crea lista default list model.
+     *
+     * @param listaVoli the lista voli
+     * @return the default list model
+     */
     public DefaultListModel<String> creaLista(ArrayList<String> listaVoli) {
         DefaultListModel<String> lista = new DefaultListModel<>();
         for (String volo : listaVoli) {
@@ -214,6 +241,10 @@ public class Prenota {
         }
         return lista;
     }
+
+    /**
+     * The Colora riga.
+     */
     public DefaultListCellRenderer coloraRiga = new DefaultListCellRenderer() {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value,

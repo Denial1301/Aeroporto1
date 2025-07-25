@@ -3,10 +3,8 @@ package implementazionePostgresDAO;
 import dao.PrenotazioneDAO;
 import db.ConnessioneDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PrenotazioneDAOImpl implements PrenotazioneDAO {
@@ -223,8 +221,10 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     @Override
     public void cancellaPrenotazione(String email, String codice, String cf)
     {
-        String sql = "DELETE FROM PRENOTAZIONI P USING PASSEGGERO PA WHERE PA.cf = ? AND P.codice = ? AND P.email_utente = ?";
+        String sql = "DELETE FROM PRENOTAZIONI P USING PASSEGGERO PA WHERE P.cf=PA.cf AND PA.cf = ? AND P.codice = ? AND P.email_utente = ?";
         String postiUpdate = "UPDATE VOLO SET numeri_posti = numeri_posti +1 WHERE codice = ?";
+        String contaPasseggero = "SELECT COUNT(*) FROM PRENOTAZIONI WHERE cf = ?";
+        String eliminaPasseggero = "DELETE FROM PASSEGGERO WHERE cf = ?";
 
         try {
             PreparedStatement psUpdate = connection.prepareStatement(postiUpdate);
@@ -238,6 +238,16 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
             if(righeEliminate == 0)
             {
                 throw new SQLException("Errore nella cancellazione della prenotazione.");
+            }
+            PreparedStatement psConta = connection.prepareStatement(contaPasseggero);
+            psConta.setString(1, cf);
+            ResultSet rs = psConta.executeQuery();
+            if(rs.next() && rs.getInt(1) == 0)
+            {
+                PreparedStatement psElimina = connection.prepareStatement(eliminaPasseggero);
+                psElimina.setString(1, cf);
+                psElimina.executeUpdate();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -272,18 +282,17 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     }
 
     @Override
-    public void updatePrenotazione(String nome, String cognome, String email, String codice,String cf)
+    public void updatePrenotazione(String cf,String cfVecchio)
     {
 
         String sql;
 
         try {
 
-            sql = "UPDATE passeggero SET nome = ?, cognome = ? WHERE cf = ?";
+            sql = "UPDATE PRENOTAZIONI SET cf = ? WHERE cf = ?";
             PreparedStatement ps= connection.prepareStatement(sql);
-            ps.setString(1, nome);
-            ps.setString(2, cognome);
-            ps.setString(3, cf);
+            ps.setString(1, cf);
+            ps.setString(2, cfVecchio);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

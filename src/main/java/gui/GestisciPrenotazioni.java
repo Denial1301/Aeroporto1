@@ -8,9 +8,13 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * The type Gestisci prenotazioni.
+ */
 public class GestisciPrenotazioni {
     private JPanel mainPanel;
     private JPanel searchPanel;
@@ -26,15 +30,27 @@ public class GestisciPrenotazioni {
     private JButton noBtn;
     private JPanel cancellaPanel;
     private Controller controller;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
     private JFrame frame;
 
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
 
+    /**
+     * Instantiates a new Gestisci prenotazioni.
+     *
+     * @param frameC     the frame c
+     * @param controller the controller
+     */
     public GestisciPrenotazioni(Frame frameC, Controller controller) {
         this.controller = controller;
         frame = new JFrame("Gestisci Prenotazioni");
@@ -116,14 +132,38 @@ public class GestisciPrenotazioni {
                 String codiceVolo = valoreSelezionato.substring(start, end);
                 int start2 = valoreSelezionato.indexOf("cf: '") + "cf: '".length();
                 int end2 = valoreSelezionato.indexOf("'", start2);
-                String cf = valoreSelezionato.substring(start2,end2);
-                String nomeNuovo = JOptionPane.showInputDialog(frame,"Cambia nominativo","Cambia nominativo",JOptionPane.PLAIN_MESSAGE);
-                if(nomeNuovo != null)
-                {
-                    String cognomeNuovo = JOptionPane.showInputDialog(frame, "Cambia cognome", "Cambia cognome", JOptionPane.PLAIN_MESSAGE);
-                    controller.updatePrenotazione(nomeNuovo,cognomeNuovo,emailLogin,codiceVolo,cf);
-                    searchField.setText("");
-                }
+                String cfVecchio = valoreSelezionato.substring(start2,end2);
+                String nome, cognome, cf, numDoc, dataNascitaS, dataEmissioneS, dataScadenzaS;
+                nome = inputSequenziale("Nome");
+                if (nome == null) return;
+
+                cognome = inputSequenziale("Cognome");
+                if (cognome == null) return;
+
+                cf = inputSequenziale("Codice fiscale");
+                if (cf == null) return;
+
+                numDoc = inputSequenziale("Numero documento");
+                if (numDoc == null) return;
+
+                dataNascitaS = inputSequenziale("Data di nascita (dd/MM/yyyy)");
+                if (dataNascitaS == null) return;
+                LocalDate dataNascita = LocalDate.parse(dataNascitaS,formatter);
+
+                dataEmissioneS = inputSequenziale("Data emissione documento (dd/MM/yyyy)");
+                if (dataEmissioneS == null) return;
+                LocalDate dataEmissione = LocalDate.parse(dataEmissioneS,formatter);
+                dataScadenzaS = inputSequenziale("Data scadenza documento (dd/MM/yyyy)");
+                if (dataScadenzaS == null) return;
+                LocalDate dataScadenza = LocalDate.parse(dataScadenzaS,formatter);
+                controller.updateDocumento(numDoc,dataEmissione,dataScadenza,cfVecchio);
+                controller.updatePasseggero(nome,cognome,cf,numDoc,dataNascita,dataEmissione,dataScadenza,emailLogin,codiceVolo, cfVecchio);
+
+                controller.updatePrenotazione(cf,cfVecchio);
+
+
+
+                searchField.setText("");
                 prenotazioni();
 
 
@@ -134,8 +174,7 @@ public class GestisciPrenotazioni {
 
     /**
      * Prenotazioni. <p>
-     *     Serve a formattare tutta la lista delle prenotazioni.
-     *
+     * Serve a formattare tutta la lista delle prenotazioni.
      */
     public void prenotazioni() {
         String ricerca = searchField.getText();
@@ -206,5 +245,29 @@ public class GestisciPrenotazioni {
             JOptionPane.showMessageDialog(frame, ex.getMessage());
         }
 
+    }
+
+    /**
+     * Input sequenziale string.
+     *
+     * @param campo the campo
+     * @return the string
+     */
+    public String inputSequenziale(String campo)
+    {
+        String input;
+        do{
+            input = JOptionPane.showInputDialog(frame, campo,campo,JOptionPane.PLAIN_MESSAGE);
+            if(input == null)
+            {
+                return null;
+            }
+            if(input.isEmpty())
+            {
+                JOptionPane.showMessageDialog(frame, "Non puoi inserire un campo vuoto.","Errore",javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
+        }while(input.isEmpty());
+        return input;
     }
 }

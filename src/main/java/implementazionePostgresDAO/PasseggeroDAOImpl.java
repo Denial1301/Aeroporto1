@@ -111,6 +111,25 @@ public class PasseggeroDAOImpl implements PasseggeroDAO {
 
     }
 
+    @Override
+    public void updatePasseggero(String nome, String cognome, String cf, String numDoc, LocalDate dataNascita, LocalDate dataEmissione, LocalDate dataScadenza, String email, String codice, String cfVecchio) {
+        String sql;
+
+        try {
+
+            sql = "UPDATE passeggero SET nome = ?, cognome = ?,cf = ?,data_nascita = ? WHERE cf = ?";
+            PreparedStatement ps= connection.prepareStatement(sql);
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setString(3, cf);
+
+            ps.setDate(4, Date.valueOf(dataNascita));
+            ps.setString(5,cfVecchio);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

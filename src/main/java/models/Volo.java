@@ -33,85 +33,45 @@ public class Volo
         this.registro = registro;
     }
 
-    // Getter e Setter
+
     public String getCodice() {
         return codice;
     }
-
     public LocalTime getOraPartenza() {
         return oraPartenza;
     }
-
     public void setCodice(String codice) {
         this.codice = codice;
     }
-
     public String getCompagnia() {
         return compagnia;
     }
-
     public void setCompagnia(String compagnia) {
         this.compagnia = compagnia;
     }
-
     public String getAeroportoOrigine() {
         return aeroportoOrigine;
     }
-
-    public void setAeroportoOrigine(String aeroportoOrigine) {
-        this.aeroportoOrigine = aeroportoOrigine;
-    }
-
     public String getAeroportoDestinazione() {
         return aeroportoDestinazione;
     }
-
-    public void setAeroportoDestinazione(String aeroportoDestinazione) {
-        this.aeroportoDestinazione = aeroportoDestinazione;
-    }
-
-
     public LocalDate getDataVolo() {
         return dataVolo;
     }
-
-    public void setDataVolo(LocalDate dataVolo) {
-        this.dataVolo = dataVolo;
-    }
-
     public LocalTime getOraArrivo() {
         return oraArrivo;
     }
-
-    public void setOraArrivo(LocalTime oraArrivo) {
-        this.oraArrivo = oraArrivo;
-    }
-
     public int getRitardo() {
         return ritardo;
     }
-
-    public void setRitardo(int ritardo) {
-        this.ritardo = ritardo;
-    }
-
     public StatoVolo getRegistro() {
         return registro;
     }
-
-    public void setRegistro(StatoVolo registro) {
-        this.registro = registro;
-    }
-
-
-
     public int getNumPosti() {
         return numPosti;
     }
 
-    public void setNumPosti(int numPosti) {
-        this.numPosti = numPosti;
-    }
+
 
 
     public String allToString() {

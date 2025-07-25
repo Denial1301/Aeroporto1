@@ -14,9 +14,6 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 
-/**
- * The type Utente page.
- */
 public class UtentePage {
     private JPanel mainPanel;
     private JLabel welcomeLabel;
@@ -38,27 +35,16 @@ public class UtentePage {
     private JButton cercaPasseggeroBtn;
     private JButton updateBtn;
     private JFrame frame;
-    private Controller controller;
 
 
-    /**
-     * Gets frame.
-     *
-     * @return the frame
-     */
+
     public JFrame getFrame() {
         return frame;
     }
 
-    /**
-     * Instantiates a new Utente page.
-     *
-     * @param frameC     the frame c
-     * @param controller the controller
-     */
     public UtentePage(JFrame frameC, Controller controller)
     {
-    this.controller = controller;
+
     frame = new JFrame("Pagina Utente");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setContentPane(mainPanel);
@@ -74,8 +60,8 @@ public class UtentePage {
             @Override
             public void componentShown(ComponentEvent e) {
 
-                aggiornaTabella(colonnePartenza, departuresTable, true);
-                aggiornaTabella(colonneArrivo, arrivalsTable, false);
+                aggiornaTabella(colonnePartenza, departuresTable, true,controller);
+                aggiornaTabella(colonneArrivo, arrivalsTable, false,controller);
 
 
                 ArrayList<String> voliPrenotati = controller.getVoliPrenotati();
@@ -119,8 +105,8 @@ public class UtentePage {
         @Override
         public void actionPerformed(ActionEvent e) {
         controller.eliminaVoliScaduti();
-        aggiornaTabella(colonnePartenza,departuresTable,true);
-        aggiornaTabella(colonneArrivo,arrivalsTable,false);
+        aggiornaTabella(colonnePartenza,departuresTable,true,controller);
+        aggiornaTabella(colonneArrivo,arrivalsTable,false,controller);
 
         }
     });
@@ -138,16 +124,7 @@ public class UtentePage {
 
     }
 
-    /**
-     * Aggiorna tabella.
-     * <p>
-     * Metodo utilizzato per poter aggiornare la tabella dal bottone, viene usato anche quando viene chiamata per la prima volta il form per creare la tabella.
-     *
-     * @param colonne    colonne della tabella
-     * @param table      the table
-     * @param isPartenza serve per distinguere i voli in partenza da quelli in arrivo.
-     */
-    public void aggiornaTabella(String[] colonne, JTable table,boolean isPartenza) {
+    public void aggiornaTabella(String[] colonne, JTable table,boolean isPartenza,Controller controller) {
 
         String[][] datiPartenza = controller.getDatiVoliPerGUI(colonne,isPartenza);
         DefaultTableModel model = new DefaultTableModel(datiPartenza, colonne) {
@@ -174,16 +151,6 @@ public class UtentePage {
 
     }
 
-    /**
-     * Aggiorna ritardo table cell renderer.
-     * <p>
-     * Serve a inserire un colore del background della colonna ritardo tra quelli che può assumere a seconda di quanto è in ritardo il volo.<p>
-     * {@code ritardo==0}: rimane bianco<p>
-     * {@code ritardo <= 30}: il background cambia colore in arancione<p>
-     * {@code ritardo>30}: il background cambia colore in rosso
-     *
-     * @return the table cell renderer
-     */
     public TableCellRenderer coloraRitardo() {
         return new DefaultTableCellRenderer() {
             @Override
@@ -214,11 +181,6 @@ public class UtentePage {
         };
     }
 
-    /**
-     * Aggiorna stato renderer table cell renderer.
-     *
-     * @return the table cell renderer
-     */
     public TableCellRenderer coloraColonna() {
         return new DefaultTableCellRenderer() {
             @Override

@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * The type Admin page.
+ */
 public class AdminPage
 {
     private JPanel mainPanel;
@@ -30,14 +33,25 @@ public class AdminPage
     private JButton modifcaVoloBtn;
     private JList partenzaVoliLista;
     private JFrame frame;
-    private Controller controller;
 
+
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * Instantiates a new Admin page.
+     *
+     * @param frameHome  the frame home
+     * @param controller the controller
+     */
     public AdminPage(JFrame frameHome, Controller controller) {
-        this.controller = controller;
+
         frame = new JFrame("Amministratore");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,14 +60,14 @@ public class AdminPage
         frame.setVisible(true);
         String[] colonnePartenza = {"Codice", "Compagnia","Destinazione" , "Data", "Partenza", "Arrivo","Posti","Ritardo","Stato","Gate"};
         String[] colonneArrivo = {"Codice","Compagnia","Origine","Data","Partenza","Arrivo","Posti","Ritardo","Stato"};
-        aggiornaTabella(colonnePartenza,partenzaVoliTable,true);
-        aggiornaTabella(colonneArrivo,arriviVoliTable,false);
+        aggiornaTabella(colonnePartenza,partenzaVoliTable,true,controller);
+        aggiornaTabella(colonneArrivo,arriviVoliTable,false,controller);
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
 
-                aggiornaTabella(colonnePartenza, partenzaVoliTable, true);
-                aggiornaTabella(colonneArrivo, arriviVoliTable, false);
+                aggiornaTabella(colonnePartenza, partenzaVoliTable, true,controller);
+                aggiornaTabella(colonneArrivo, arriviVoliTable, false,controller);
 
             }
         });
@@ -95,7 +109,16 @@ public class AdminPage
 
 
     }
-    public void aggiornaTabella(String[] colonne, JTable table,boolean isPartenza) {
+
+    /**
+     * Aggiorna tabella.
+     *
+     * @param colonne    the colonne
+     * @param table      the table
+     * @param isPartenza the is partenza
+     * @param controller the controller
+     */
+    public void aggiornaTabella(String[] colonne, JTable table,boolean isPartenza, Controller controller) {
 
         String[][] datiPartenza = controller.getDatiVoliPerGUI(colonne,isPartenza);
         DefaultTableModel model = new DefaultTableModel(datiPartenza, colonne) {
@@ -117,6 +140,11 @@ public class AdminPage
     }
 
 
+    /**
+     * Colora ritardo table cell renderer.
+     *
+     * @return the table cell renderer
+     */
     public TableCellRenderer coloraRitardo() {
         return new DefaultTableCellRenderer() {
             @Override
@@ -146,6 +174,12 @@ public class AdminPage
             }
         };
     }
+
+    /**
+     * Colora colonna table cell renderer.
+     *
+     * @return the table cell renderer
+     */
     public TableCellRenderer coloraColonna() {
         return new DefaultTableCellRenderer() {
             @Override

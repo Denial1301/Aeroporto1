@@ -29,7 +29,7 @@ public class PrenotazioniUtenti {
     private JButton siEBtn;
     private JButton noEBtn;
     private JFrame frame;
-    private Controller controller;
+
 
     /**
      * Gets frame.
@@ -48,7 +48,7 @@ public class PrenotazioniUtenti {
      */
     public PrenotazioniUtenti(JFrame frameC, Controller controller)
     {
-        this.controller = controller;
+
 
         frame = new JFrame("Prenotazioni utenti");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,8 +66,8 @@ public class PrenotazioniUtenti {
         ArrayList<String> prenotazioniUtenti = controller.getPrenotazioniUtenti(false);
 
         DefaultListModel<String> listaNuove = new DefaultListModel<>();
-        aggiornaLista(false,utentiPrenotatiList);
-        aggiornaLista(true,nuovePrenotazioniList);
+        aggiornaLista(false,utentiPrenotatiList,controller);
+        aggiornaLista(true,nuovePrenotazioniList,controller);
         nuovePrenotazioniList.setCellRenderer(coloraPrenotazione);
         utentiPrenotatiList.setCellRenderer(coloraPrenotazione);
 
@@ -117,8 +117,8 @@ public class PrenotazioniUtenti {
                 System.out.println(prenotazioneNuova);
                 controller.confermaPrenotazione(true,prenotazioneNuova);
                 JOptionPane.showMessageDialog(frame,"Prenotazione confermata correttamente","Prenotazione confermata",JOptionPane.INFORMATION_MESSAGE);
-                aggiornaLista(true,nuovePrenotazioniList);
-                aggiornaLista(false,utentiPrenotatiList);
+                aggiornaLista(true,nuovePrenotazioniList,controller);
+                aggiornaLista(false,utentiPrenotatiList,controller);
                 confermaPrenotazioneLabel.setVisible(false);
                 siCBtn.setVisible(false);
                 noCBtn.setVisible(false);
@@ -141,8 +141,8 @@ public class PrenotazioniUtenti {
                 String prenotazioneNuova = selezionato.substring(inizio, fine);
                 controller.confermaPrenotazione(false, prenotazioneNuova);
                 JOptionPane.showMessageDialog(frame,"Prenotazione eliminata correttamente","Prenotazione eliminata",JOptionPane.INFORMATION_MESSAGE);
-                aggiornaLista(true,nuovePrenotazioniList);
-                aggiornaLista(false,utentiPrenotatiList);
+                aggiornaLista(true,nuovePrenotazioniList,controller);
+                aggiornaLista(false,utentiPrenotatiList,controller);
                 nuovePrenotazioniList.setCellRenderer(coloraPrenotazione);
                 utentiPrenotatiList.setCellRenderer(coloraPrenotazione);
                 nuovePrenotazioniList.clearSelection();
@@ -158,8 +158,8 @@ public class PrenotazioniUtenti {
                 String prenotazioneUtente = selezionato.substring(inizio, fine);
                 controller.confermaPrenotazione(false,prenotazioneUtente);
                 JOptionPane.showMessageDialog(frame,"Prenotazione eliminata correttamente","Prenotazione eliminata",JOptionPane.INFORMATION_MESSAGE);
-                aggiornaLista(true,nuovePrenotazioniList);
-                aggiornaLista(false,utentiPrenotatiList);
+                aggiornaLista(true,nuovePrenotazioniList,controller);
+                aggiornaLista(false,utentiPrenotatiList,controller);
                 nuovePrenotazioniList.setCellRenderer(coloraPrenotazione);
                 utentiPrenotatiList.setCellRenderer(coloraPrenotazione);
                 confermaPrenotazioneLabel.setVisible(false);
@@ -185,12 +185,14 @@ public class PrenotazioniUtenti {
 
     /**
      * Aggiorna lista.
-     *<p>
+     * <p>
      * Aggiorna le liste della gui.
-     * @param isNuove  serve a selezionare le prenotazioni nuove a quelle degli utenti già prenotati.
-     * @param listaGUI the lista gui
+     *
+     * @param isNuove    serve a selezionare le prenotazioni nuove a quelle degli utenti già prenotati.
+     * @param listaGUI   the lista gui
+     * @param controller the controller
      */
-    public void aggiornaLista( boolean isNuove,JList listaGUI)
+    public void aggiornaLista( boolean isNuove,JList listaGUI,Controller controller)
     {
         ArrayList<String> tipoPrenotazioni = controller.getPrenotazioniUtenti(isNuove);
 
@@ -206,7 +208,6 @@ public class PrenotazioniUtenti {
      * The Colora prenotazione.
      * <p>
      * Colora la prenotazione in base allo stato.
-     *
      */
     public DefaultListCellRenderer coloraPrenotazione = new DefaultListCellRenderer() {
         @Override

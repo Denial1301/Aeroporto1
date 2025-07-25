@@ -8,6 +8,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -75,7 +76,7 @@ public class ModifcaVoli {
         ArrayList<String> partenza = new ArrayList<>();
         ArrayList<String> arrivo = new ArrayList<>();
         ArrayList<String> gate = new ArrayList<>();
-        controller.voliPrenotabili(partenza,arrivo);
+        controller.tuttiVoli(partenza,arrivo);
         controller.getGate(gate);
         statoBox.addItem("Programmato.");
         statoBox.addItem("Cancellato.");
@@ -91,7 +92,7 @@ public class ModifcaVoli {
         }
         ArrayList<String> listaVoliPartenza = new ArrayList<>();
         ArrayList<String> listaVoliArrivo = new ArrayList<>();
-        controller.voliPrenotabili(listaVoliPartenza,listaVoliArrivo);
+        controller.tuttiVoli(listaVoliPartenza,listaVoliArrivo);
         voliPartenzaList.setModel(creaLista(listaVoliPartenza));
         voliPartenzaList.setCellRenderer(coloraRiga);
         voliArrivoList.setModel(creaLista(listaVoliArrivo));
@@ -126,8 +127,16 @@ public class ModifcaVoli {
                     liberaGateBtn.setVisible(true);
 
                     modificaPanel.setVisible(true);
-                    gateLabel.setVisible(true);
-                    gateBox.setVisible(true);
+
+                    if(stato.equals("Cancellato.")) {
+                        gateBox.setVisible(false);
+                        gateLabel.setVisible(false);
+                        liberaGateBtn.setVisible(false);
+                    }else {
+                        gateBox.setVisible(true);
+                        gateLabel.setVisible(true);
+                        liberaGateBtn.setVisible(true);
+                    }
                     voliArrivoList.clearSelection();
                 }
             }
@@ -180,12 +189,12 @@ public class ModifcaVoli {
                     LocalDate data = LocalDate.parse(dataField.getText(),dateFormatter);
                     int ritardo = Integer.parseInt(ritardoField.getText());
                     String gate = gateBox.getSelectedItem().toString();
-                    String stato = statoBox.getSelectedItem().toString();
+                    String stato = statoBox.getSelectedItem().toString().replace(".","");
                     controller.updateVolo(isPartenza,codice, compagniaField.getText(),data,arrivo,partenza,stato,ritardo,gate);
                     JOptionPane.showMessageDialog(frameC, "Volo aggiornato con successo","Info",JOptionPane.INFORMATION_MESSAGE);
                     ArrayList<String> listaVoliPartenza = new ArrayList<>();
                     ArrayList<String> listaVoliArrivo = new ArrayList<>();
-                    controller.voliPrenotabili(listaVoliPartenza,listaVoliArrivo);
+                    controller.tuttiVoli(listaVoliPartenza,listaVoliArrivo);
                     voliPartenzaList.setModel(creaLista(listaVoliPartenza));
                     voliPartenzaList.setCellRenderer(coloraRiga);
                     voliArrivoList.setModel(creaLista(listaVoliArrivo));
@@ -199,13 +208,12 @@ public class ModifcaVoli {
                         gateBox.addItem(g);
                     }
 
-
-
-
-
                 }catch(DateTimeParseException ex)
                 {
                     JOptionPane.showMessageDialog(frame,"Formato data o ora non valido.","Warning",JOptionPane.WARNING_MESSAGE);
+                }catch (DateTimeException ex)
+                {
+                    JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore",JOptionPane.ERROR_MESSAGE);
                 }
 
 
@@ -227,7 +235,7 @@ public class ModifcaVoli {
                  JOptionPane.showMessageDialog(frame,"Gate liberato!","Operazione riuscita",JOptionPane.INFORMATION_MESSAGE);
                  ArrayList<String> listaVoliPartenza = new ArrayList<>();
                  ArrayList<String> listaVoliArrivo = new ArrayList<>();
-                 controller.voliPrenotabili(listaVoliPartenza,listaVoliArrivo);
+                 controller.tuttiVoli(listaVoliPartenza,listaVoliArrivo);
                  voliPartenzaList.setModel(creaLista(listaVoliPartenza));
                  voliPartenzaList.setCellRenderer(coloraRiga);
                  voliArrivoList.setModel(creaLista(listaVoliArrivo));

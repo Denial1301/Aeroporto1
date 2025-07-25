@@ -25,7 +25,7 @@ public class CercaPasseggero {
     private JTextField cfField;
     private JButton cercaBtn;
     private JButton indietroBtn;
-    private Controller controller;
+
     private JFrame frame;
 
     /**
@@ -45,7 +45,7 @@ public class CercaPasseggero {
      */
     public CercaPasseggero(JFrame frameC, Controller controller) {
 
-        this.controller = controller;
+
         frame = new JFrame("Cerca Passeggero");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
