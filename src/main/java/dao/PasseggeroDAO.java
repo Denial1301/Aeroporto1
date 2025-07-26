@@ -42,8 +42,10 @@ public interface PasseggeroDAO {
      * @param numDocumento the num documento
      * @param cf           the cf
      * @param dataNascita  the data nascita
+     * @param email        the email
      */
-    public void getAllPasseggero(ArrayList<String> nome, ArrayList<String> cognome, ArrayList<String> numDocumento, ArrayList<String> cf, ArrayList<LocalDate> dataNascita);
+    public void getAllPasseggero(ArrayList<String> nome, ArrayList<String> cognome, ArrayList<String> numDocumento, ArrayList<String> cf,
+                                 ArrayList<LocalDate> dataNascita,String email);
 
     /**
      * Update passeggero.

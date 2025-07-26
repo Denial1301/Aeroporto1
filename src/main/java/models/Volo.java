@@ -40,14 +40,8 @@ public class Volo
     public LocalTime getOraPartenza() {
         return oraPartenza;
     }
-    public void setCodice(String codice) {
-        this.codice = codice;
-    }
     public String getCompagnia() {
         return compagnia;
-    }
-    public void setCompagnia(String compagnia) {
-        this.compagnia = compagnia;
     }
     public String getAeroportoOrigine() {
         return aeroportoOrigine;

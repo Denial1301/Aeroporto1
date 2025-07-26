@@ -96,16 +96,28 @@ public class Controller {
      * @param ritardo               the ritardo
      * @param numPosti              the num posti
      * @param stato                 the stato
-     * @throws DateTimeException the date time exception
+     * @throws DateTimeException        quando partenza>arrivo.
+     * @throws IllegalArgumentException quando: origine e destinazione != da NAP, origini e destinazione>3.
      */
     public void registraVolo(String codice, String compagnia, String aeroportoOrigine,
                              String aeroportoDestinazione, LocalDate dataVolo, LocalTime oraPartenza,
-                             LocalTime oraArrivo, int ritardo, int numPosti,String stato) throws DateTimeException {
+                             LocalTime oraArrivo, int ritardo, int numPosti,String stato) throws DateTimeException, IllegalArgumentException {
 
         if(oraPartenza.isAfter(oraArrivo)) {
             throw new DateTimeException("Ora partenza maggiore di ora arrivo.");
         }
-        voliDAO.addVoli(codice,compagnia,aeroportoOrigine,aeroportoDestinazione,dataVolo,oraPartenza,oraArrivo,stato,numPosti,ritardo);
+        if(aeroportoDestinazione.length()> 3 || aeroportoOrigine.length()>3) {
+            throw new IllegalArgumentException("Nei campi origine e destinazione, inserire solo le tre lettere (esempio: Napoli = NAP)");
+        }
+        if(!aeroportoDestinazione.equals("NAP") && !aeroportoOrigine.equals("NAP")) {
+            throw new IllegalArgumentException("Inserire in uno dei campi origine o destinazione NAP");
+        }
+        try{
+            voliDAO.addVoli(codice,compagnia,aeroportoOrigine,aeroportoDestinazione,dataVolo,oraPartenza,oraArrivo,stato,numPosti,ritardo);
+        }catch (IllegalArgumentException e) {
+            throw e;
+        }
+
 
     }
 
@@ -186,13 +198,13 @@ public class Controller {
 
 
     /**
-     * Voli partenza array list.
+     * voliPrenotabili .
      * <p>
-     * Viene utilizzato per convertire in {@code String} i campi di {@code tuttiVoli} in {@code VoliPartenza} sfruttando il polimorfismo per identificare le istanze {@code VoliPartenza}.
+     * Viene utilizzato per convertire in {@code String} i campi di {@code tuttiVoli} in {@code VoliPartenza} e {@code VoliArrivo} sfruttando il polimorfismo per identificare le istanze corette.
      *
      * @param voliPrenotabiliPartenza the voli prenotabili partenza
      * @param voliPrenotabiliArrivo   the voli prenotabili arrivo
-     * @return la lista dei voli in partenza
+     *
      */
     public void voliPrenotabili(ArrayList<String> voliPrenotabiliPartenza, ArrayList<String> voliPrenotabiliArrivo)
     {
@@ -593,7 +605,7 @@ public class Controller {
      * @param stato      the stato
      * @param ritardo    the ritardo
      * @param gate       the gate
-     * @throws DateTimeException the date time exception
+     * @throws DateTimeException quando: partenza>arrivo
      */
     public void updateVolo(boolean isPartenza,String codice, String compagnia,LocalDate data,LocalTime arrivo,LocalTime partenza,
                            String stato,int ritardo,String gate) throws DateTimeException
@@ -679,7 +691,7 @@ public class Controller {
 
     /**
      * Gets passeggero.<p>
-     * Serve per creare un arrayList della classe Passeggero in modo da poter effettuare il toString negli altri metodi.
+     * Serve per creare un {@code arrayList<>} della classe Passeggero in modo da poter effettuare il toString negli altri metodi.
      *
      * @return the passeggero
      */
@@ -690,7 +702,7 @@ public class Controller {
         ArrayList<String> numDocumento = new ArrayList<>();
         ArrayList<LocalDate> dataNascita = new ArrayList<>();
         ArrayList<String> cf = new ArrayList<>();
-        passeggeroDAO.getAllPasseggero(nomePasseggero,cognomePasseggero,numDocumento,cf,dataNascita);
+        passeggeroDAO.getAllPasseggero(nomePasseggero,cognomePasseggero,numDocumento,cf,dataNascita,emailLogin);
         ArrayList<Passeggero> listaPasseggero = new ArrayList<>();
         for (int i = 0; i < nomePasseggero.size(); i++) {
             Passeggero passeggero = new Passeggero(nomePasseggero.get(i),cognomePasseggero.get(i),numDocumento.get(i),cf.get(i),dataNascita.get(i));
@@ -703,7 +715,7 @@ public class Controller {
 
     /**
      * Lista passeggero array list.<p>
-     * Serve per creare una lista di stringhe dei passeggeri.
+     * Serve per creare {@code ArrayList<>} di Stringhe dei passeggeri.
      *
      * @return the array list
      */
@@ -769,11 +781,11 @@ public class Controller {
         }
         String dominio = email.substring(atIndex + 1).toLowerCase();
 
-       if(dominio.equals("gmail.com") || dominio.equals("email.com"))
+       if(dominio.equals("amministratoreaeroportodinapoli.it"))
        {
-           return true;
+           return false;
        }
-       return false;
+       return true;
 
     }
 

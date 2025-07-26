@@ -89,10 +89,12 @@ public class PasseggeroDAOImpl implements PasseggeroDAO {
         }
 
     @Override
-    public void getAllPasseggero(ArrayList<String> nome, ArrayList<String> cognome, ArrayList<String> numDocumento, ArrayList<String> cf, ArrayList<LocalDate> dataNascita) {
-        String sql = "SELECT  PASSEGGERO.* FROM PASSEGGERO";
+    public void getAllPasseggero(ArrayList<String> nome, ArrayList<String> cognome, ArrayList<String> numDocumento, ArrayList<String> cf,
+                                 ArrayList<LocalDate> dataNascita,String email) {
+        String sql = "SELECT P.* FROM PASSEGGERO P JOIN PRENOTAZIONI PR ON P.CF = PR.CF WHERE PR.EMAIL_utente = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next())
             {
@@ -112,7 +114,8 @@ public class PasseggeroDAOImpl implements PasseggeroDAO {
     }
 
     @Override
-    public void updatePasseggero(String nome, String cognome, String cf, String numDoc, LocalDate dataNascita, LocalDate dataEmissione, LocalDate dataScadenza, String email, String codice, String cfVecchio) {
+    public void updatePasseggero(String nome, String cognome, String cf, String numDoc, LocalDate dataNascita, LocalDate dataEmissione, LocalDate dataScadenza,
+                                 String email, String codice, String cfVecchio) {
         String sql;
 
         try {

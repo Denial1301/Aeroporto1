@@ -26,6 +26,7 @@ public class Registrazione {
     private JCheckBox mostraCheckBox;
     private JLabel dateLabel;
     private JTextField dateField;
+    private JButton annullaBtn;
 
 
     /**
@@ -103,6 +104,13 @@ public class Registrazione {
                     passwordField.setEchoChar((char)0);
                 }else
                     passwordField.setEchoChar('•');
+            }
+        });
+        annullaBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameC.setVisible(true);
+                frame.dispose();
             }
         });
 

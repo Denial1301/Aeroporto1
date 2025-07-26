@@ -163,18 +163,27 @@ private Connection connection;
 
     @Override
     public void addVoli(String codice, String compagnia, String origine, String destinazione, LocalDate dataVolo,
-                        LocalTime oraPartenza, LocalTime oraArrivo, String stato, int posti, int ritardo) {
+                        LocalTime oraPartenza, LocalTime oraArrivo, String stato, int posti, int ritardo) throws IllegalArgumentException {
         String sql = "INSERT INTO VOLO (codice, compagnia, aeroporto_origine, aeroporto_destinazione, data_volo, ora_volo, ora_partenza, stato, numeri_posti, ritardo) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?::stato_volo, ?, ?)";
+        String checkCodice = "SELECT 1 FROM VOLO WHERE codice = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement psCodice = connection.prepareStatement(checkCodice);
+            psCodice.setString(1, codice);
+            ResultSet rsCodice = psCodice.executeQuery();
+            if(rsCodice.next()) {
+                throw new IllegalArgumentException("Codice già presente nel sistema.");
+
+            }
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, codice);
             ps.setString(2, compagnia);
             ps.setString(3, origine);
             ps.setString(4, destinazione);
             ps.setDate(5, java.sql.Date.valueOf(dataVolo));
-            ps.setTime(6, java.sql.Time.valueOf(oraPartenza));
-            ps.setTime(7, java.sql.Time.valueOf(oraArrivo));
+            ps.setTime(6, java.sql.Time.valueOf(oraArrivo));
+            ps.setTime(7, java.sql.Time.valueOf(oraPartenza));
             ps.setString(8, stato);
             ps.setInt(9, posti);
             ps.setInt(10, ritardo);

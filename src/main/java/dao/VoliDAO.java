@@ -89,9 +89,10 @@ public interface VoliDAO {
      * @param stato        the stato
      * @param posti        the posti
      * @param ritardo      the ritardo
+     * @throws IllegalArgumentException se il codice inserito è già presente nel sistema.
      */
     public void addVoli(String codice, String compagnia, String origine, String destinazione,LocalDate dataVolo,LocalTime oraPartenza,LocalTime oraArrivo,String stato, int posti,
-                        int ritardo);
+                        int ritardo) throws IllegalArgumentException;
 
 
 }

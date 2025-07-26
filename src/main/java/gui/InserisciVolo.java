@@ -39,6 +39,7 @@ public class InserisciVolo {
     private JComboBox flyStateBox;
     private JLabel timeDeparturesLabel;
     private JTextField timeDepartureField;
+    private JLabel compagniaAereaLabel;
     private JFrame frame;
 
 
@@ -108,6 +109,8 @@ public class InserisciVolo {
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(frame, "Formattazione della data o ora errata.","Errore", JOptionPane.ERROR_MESSAGE);
                 }catch (DateTimeException ex) {
+                    JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore", JOptionPane.ERROR_MESSAGE);
+                }catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame,ex.getMessage(),"Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }

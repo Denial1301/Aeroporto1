@@ -33,7 +33,6 @@ public class UtentePage {
     private JScrollPane bookedFlyScroll;
     private JList bookedFlyList;
     private JButton cercaPasseggeroBtn;
-    private JButton updateBtn;
     private JFrame frame;
 
 
@@ -101,15 +100,7 @@ public class UtentePage {
 
         }
     });
-    updateBtn.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        controller.eliminaVoliScaduti();
-        aggiornaTabella(colonnePartenza,departuresTable,true,controller);
-        aggiornaTabella(colonneArrivo,arrivalsTable,false,controller);
 
-        }
-    });
     cercaPasseggeroBtn.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

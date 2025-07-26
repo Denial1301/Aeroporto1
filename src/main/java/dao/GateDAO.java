@@ -18,6 +18,7 @@ public interface GateDAO
      * Libera gate.
      *
      * @param codice the codice
+     * @throws IllegalArgumentException quando il volo a cui si deve cancellare il gate è null
      */
-    public void liberaGate(String codice);
+    public void liberaGate(String codice) throws IllegalArgumentException;
 }

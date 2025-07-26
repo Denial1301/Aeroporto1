@@ -4,7 +4,6 @@ public class Prenotazione  {
     private String numPrenotazione;
     private String posto;
     private StatoPrenotazione stato;
-    private String emailUtente;
     private String codiceVolo;
     private String cf;
     private String nome;

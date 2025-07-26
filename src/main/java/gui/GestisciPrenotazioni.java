@@ -158,7 +158,6 @@ public class GestisciPrenotazioni {
                 LocalDate dataScadenza = LocalDate.parse(dataScadenzaS,formatter);
                 controller.updateDocumento(numDoc,dataEmissione,dataScadenza,cfVecchio);
                 controller.updatePasseggero(nome,cognome,cf,numDoc,dataNascita,dataEmissione,dataScadenza,emailLogin,codiceVolo, cfVecchio);
-
                 controller.updatePrenotazione(cf,cfVecchio);
 
 

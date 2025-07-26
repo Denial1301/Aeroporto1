@@ -31,6 +31,7 @@ public class AdminPage
     private JTable partenzaVoliTable;
     private JTable arriviVoliTable;
     private JButton modifcaVoloBtn;
+    private JButton updateBtn;
     private JList partenzaVoliLista;
     private JFrame frame;
 
@@ -104,6 +105,15 @@ public class AdminPage
                 frame.setVisible(false);
                 ModifcaVoli modifcaVoli = new ModifcaVoli(controller,frame);
                 modifcaVoli.getFrame().setVisible(true);
+            }
+        });
+        updateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.eliminaVoliScaduti();
+                aggiornaTabella(colonnePartenza,partenzaVoliTable,true,controller);
+                aggiornaTabella(colonneArrivo,arriviVoliTable,false,controller);
+
             }
         });
 

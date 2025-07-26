@@ -10,23 +10,16 @@ public class Utente  {
     private LocalDate dataNascita;
     private String password;
 
-    public LocalDate getDataNascita() {
-        return dataNascita;
-    }
 
-    public Utente(String nome, String password, String cognome, String email, LocalDate dataNascita) { // va eliminata se necessario
-
+    public Utente(String nome, String password, String cognome, String email, LocalDate dataNascita) {
+    this.nome = nome;
     this.cognome = cognome;
     this.email = email;
     this.password = password;
     this.dataNascita = dataNascita;
 
 }
-public Utente(String email, String Password)
-{
-    this.email = email;
-    this.password = Password;
-}
+
 
 
 }

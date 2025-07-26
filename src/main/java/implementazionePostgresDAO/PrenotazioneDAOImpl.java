@@ -188,7 +188,7 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     public ArrayList<String> generaPostiLiberi(String codice,int postiTotali) {
         ArrayList<String> tuttiPosti = new ArrayList<>();
         char fila = 'A';
-        for (int i = 0; i<3; i++) {
+        for (int i = 0; i<2; i++) {
             fila+= (char) i;
             for (int numero = 1; numero <= postiTotali; numero++) {
                 tuttiPosti.add(fila+String.valueOf(numero));
